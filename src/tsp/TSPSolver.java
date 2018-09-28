@@ -71,7 +71,6 @@ public class TSPSolver {
 	{
 		m_solution.print(System.err);
 		
-		int k = 2;
 		
 		// Example of a time loop
 		long startTime = System.currentTimeMillis();
