@@ -2,16 +2,21 @@ package tsp;
 
 import tsp.metaheuristic.AMetaheuristic;
 
-public class Visibilite extends AMetaheuristic {
+public class Visibilite {
+
+	
+	private Instance m_instance;
+	
+	
+
+	public Visibilite(Instance m_instance) {
+		super();
+		this.m_instance = m_instance;
+	}
+
 
 	// plus une ville est loin, moins elle a de chance d’être choisie =« visibilité »
 	
-	
-		public Visibilite(Instance instance, String name) throws Exception {
-		super(instance, name);
-		// TODO Auto-generated constructor stub
-	}
-
 		public void visibilite(int i, int j) {
 			try {
 				if (m_instance.getDistances(i, j) != 0) {
@@ -24,10 +29,6 @@ public class Visibilite extends AMetaheuristic {
 			
 		}
 
-		@Override
-		public Solution solve(Solution sol) throws Exception {
-			// TODO Auto-generated method stub
-			return null;
-		}
+		
 	
 }
