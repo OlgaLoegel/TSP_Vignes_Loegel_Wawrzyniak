@@ -17,7 +17,7 @@ public class Ant {
     	this.visitedCities= new ArrayList<Integer>();
     	for (int i=1; i<=m_instance.getNbCities(); i++) {
     	     this.visitedCities.add(i);}
-    	this.originCity= this.originCity;
+    		this.originCity=originCity;
         this.VisitedLength=0;}
     
     
@@ -28,7 +28,7 @@ public class Ant {
 	   return this.citiesStillToVisit;
    }
   
-   public long getTmpVisitedLength() {
+   public long getVisitedLength() {
  		return VisitedLength;
  	}
    
@@ -41,8 +41,8 @@ public class Ant {
 }
 
   
-	public void setTmpVisitedLength(long tmpVisitedLength) {
-		this.VisitedLength = tmpVisitedLength;
+	public void setVisitedLength(long VisitedLength) {
+		this.VisitedLength = VisitedLength;
 	}
 
 
