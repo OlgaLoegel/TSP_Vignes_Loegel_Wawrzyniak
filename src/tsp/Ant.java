@@ -6,12 +6,12 @@ import java.util.ArrayList;
 public class Ant {
 
 	public Instance m_instance;
-	public int originCity;
-	public ArrayList<Integer> visitedCities;        // toutes les villes visitées par la fourmi
-    public ArrayList<Integer> citiesStillToVisit;    // toutes les villes encore à visiter
-    public int currentPosition;
-    public long VisitedLength;
-    public int[][] WentThisPath;
+	public int originCity;                          // ville d'origine de la fourmi
+	public ArrayList<Integer> visitedCities;        // liste de toutes les villes visitées par la fourmi
+    public ArrayList<Integer> citiesStillToVisit;    // liste de toutes les villes encore à visiter
+    public int currentPosition;                    // position actuelle de la fourmi //
+    public long VisitedLength;                     // distance déjà parcourue par la fourmi //
+    public int[][] WentThisPath;                   // tableau de 0 et de 1 indiquant 0 en [i][j] et [j][i] lorsque la fourmi a emprunté le chemin i->j (ou j->i), 0 sinon.   
 
     
     public Ant(Instance m_instance) {
