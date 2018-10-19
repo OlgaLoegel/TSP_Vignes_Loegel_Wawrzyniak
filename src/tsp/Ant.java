@@ -4,12 +4,12 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class Ant {
-	private Instance m_instance;
-	private int originCity;
-	private ArrayList<Integer> visitedCities;        // toutes les villes visitées par la fourmi
-    private ArrayList<Integer> citiesStillToVisit;    // toutes les villes encore à visiter
-    private int currentPosition;
-    private long tmpVisitedLength;
+	public Instance m_instance;
+	public int originCity;
+	public ArrayList<Integer> visitedCities;        // toutes les villes visitées par la fourmi
+    public ArrayList<Integer> citiesStillToVisit;    // toutes les villes encore à visiter
+    public int currentPosition;
+    public long tmpVisitedLength;
     
     public Ant(Instance m_instance) {
     	super();
