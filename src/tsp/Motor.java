@@ -35,8 +35,10 @@ public class Motor {
 		}
 		for (Ant a : AntSystem) {
 			a.setVisitedLength(0);
-			a.setOriginCity((int) Math.ceil(Math.random()*n));
-			a.setCurrentPosition(currentPosition);
+			int city = (int) Math.ceil(Math.random()*n);
+			a.setOriginCity(city);
+			a.setCurrentPosition(city);
+			
 		}
 
 		return shortestWay;
