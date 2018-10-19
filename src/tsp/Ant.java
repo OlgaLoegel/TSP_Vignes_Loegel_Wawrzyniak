@@ -9,7 +9,8 @@ public class Ant {
 	private ArrayList<Integer> visitedCities;        // toutes les villes visitées par la fourmi
     private ArrayList<Integer> citiesStillToVisit;    // toutes les villes encore à visiter
     private int currentPosition;
-    private long tmpVisitedLength;
+    private long VisitedLength;
+    private int[][] WentThisPath;
     
     public Ant(Instance m_instance) {
     	super();
@@ -18,10 +19,17 @@ public class Ant {
     	for (int i=1; i<=m_instance.getNbCities(); i++) {
     	     this.visitedCities.add(i);}
     	this.originCity= this.originCity;
-        this.tmpVisitedLength=0;}
+        this.VisitedLength=0;}
     
-    
-   public ArrayList<Integer> getVisitedCities(){
+public int getWentThisPath(int i, int j) {
+	return this.WentThisPath[i][j];
+}
+
+public void setOriginCity(int i) {
+	this.originCity=i;
+}
+  
+public ArrayList<Integer> getVisitedCities(){
         return this.visitedCities; 
 }
    public ArrayList<Integer> getCitiesStillVisited(){
@@ -29,7 +37,7 @@ public class Ant {
    }
   
    public long getTmpVisitedLength() {
- 		return tmpVisitedLength;
+ 		return VisitedLength;
  	}
    
    public int getCurrentPosition() {
@@ -42,7 +50,7 @@ public class Ant {
 
   
 	public void setTmpVisitedLength(long tmpVisitedLength) {
-		this.tmpVisitedLength = tmpVisitedLength;
+		this.VisitedLength = tmpVisitedLength;
 	}
 
 
