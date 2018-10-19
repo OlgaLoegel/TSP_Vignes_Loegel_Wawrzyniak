@@ -5,7 +5,11 @@ public class ChoiceNextCity extends Ant {
 	public static final int ALPHA=1;
 	public static final int BETA=5;
 	
-	private Instance m_instance;
+	public Instance m_instance;
+	public Pheromones pheromones; 
+	public Visibilite visibilite;
+
+	
 	
 	
 	public ChoiceNextCity(Instance m_instance) {
@@ -40,12 +44,12 @@ public class ChoiceNextCity extends Ant {
 		double proba;
 		double s=0;
 		for (int k=0; k<this.citiesStillToVisit.size(); k++) {
-			if (citiesStillToVisit.contains(k)) {
-			s=s+ Math.pow(Pheromones.pheromones[k][j], ALPHA) * Math.pow(Visibilite.visibilite(i,k), BETA);
+			if (this.citiesStillToVisit.contains(k)) {
+			s=s+ Math.pow(pheromones.pheromones[k][j], ALPHA) * Math.pow(visibilite.visibilite(i,k), BETA);
 			}
 		}
 	
-		proba=( Math.pow(this.pheromones[i][j], ALPHA) * Math.pow(Visibilite.visibilite(i, j), BETA) ) /s;
+		proba=( Math.pow(this.pheromones.pheromones[i][j], ALPHA) * Math.pow(visibilite.visibilite(i, j), BETA) ) /s;
 		
 		return proba;
 	}

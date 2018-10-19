@@ -17,16 +17,18 @@ public class Visibilite {
 
 	// plus une ville est loin, moins elle a de chance d’être choisie =« visibilité »
 	
-		public void visibilite(int i, int j) {
+		public long visibilite(int i, int j) {
+			long v=0;
 			try {
 				if (m_instance.getDistances(i, j) != 0) {
-				long  v=1/m_instance.getDistances(i, j);
+				 v=1/m_instance.getDistances(i, j);
 				}
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
+				
 				e.printStackTrace();
 			}
 			
+			return v;
 		}
 
 		
