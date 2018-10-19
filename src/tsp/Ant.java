@@ -36,10 +36,13 @@ public void setOriginCity(int i) {
 public ArrayList<Integer> getVisitedCities(){
         return this.visitedCities; 
 }
-   public ArrayList<Integer> getCitiesStillVisited(){
+   public ArrayList<Integer> getCitiesStillToVisit(){
 	   return this.citiesStillToVisit;
    }
   
+   public void setCitiesStillToVisit(ArrayList<Integer> citiesToVisit) {
+	   this.citiesStillToVisit= citiesToVisit;
+   }
 
 
    public long getVisitedLength() {
