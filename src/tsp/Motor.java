@@ -33,15 +33,36 @@ public class Motor {
 				pher[i][j]=p;
 			}
 		}
-		for (Ant a : AntSystem) {
-			a.setVisitedLength(0);
-			int city = (int) Math.ceil(Math.random()*n);
-			a.setOriginCity(city);
-			a.setCurrentPosition(city);
-			
+		for (Ant a : AntSystem) {									//pour chaque fourmis :
+			a.setVisitedLength(0);									//met à O la distance parcourue
+			int city = (int) Math.ceil(Math.random()*n);			//donne le numéro d'une ville au hasard
+			a.setOriginCity(city);									//attribue cette ville comme ville d'origine (restera inchangée)
+			a.setCurrentPosition(city);								//même ville pour ville où se trouve
+			ArrayList<Integer> visited = new ArrayList<Integer>();	//crée une liste vide
+			a.setVisitedCities(visited);							//attribue cette liste aux villes visitées
+			ArrayList<Integer> toVisit = new ArrayList<Integer>();	//crée un liste vide
+			for (int i=0;i<n;i++) {									//remplit la liste vide des villes restantes à visiter
+				if (i+1!=city) {									//on ne met pas dans la liste la ville d'origine qui sera choisie la dernière
+					toVisit.add(i+1);
+				}
+			}
+			a.setCitiesStillToVisit(toVisit);						//on attribue cette ville a la liste des villes à visiter pour chaque fourmis		
 		}
+		int[][] wentThisPath = new int[n][n];						//on crée le tableau dont les valeurs seront 1 si la fourmi est passé entre i et j, 0 sinon
+		for(int i=0;i<n;i++) {
+			for(int j=0;j<n;j++) {
+				wentThisPath[i][j]=0;								//on initialise tout à 0;
+			}
+		}
+		//fin initialisation
+		
+		
+		
+		//boucle while à faire !!
 
-		return shortestWay;
+		
+		
+		return shortestWay;											//on return leplus court chemin
 	}
 
 }
