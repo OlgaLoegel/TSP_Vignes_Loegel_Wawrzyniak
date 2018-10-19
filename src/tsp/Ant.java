@@ -29,6 +29,10 @@ public int getWentThisPath(int i, int j) {
 	return this.WentThisPath[i][j];
 }
 
+public void setWentThisPath(int i, int j) {
+	this.WentThisPath[i][j]=1;
+}
+
 public void setOriginCity(int i) {
 	this.originCity=i;
 }
