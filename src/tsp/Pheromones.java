@@ -24,10 +24,10 @@ public class Pheromones  {
 	
 	/*Methodes*/
 	
-	public int NbAntWentThisPath(int i, int j, Ant[] AntSystem) {
+	public int DeposedPheromones(int i, int j, Ant[] AntSystem) {
 		int s=0;
 		for (Ant fourmis : AntSystem) {
-			s+=fourmis.getWentThisPath(i, j);
+			s+=fourmis.getWentThisPath(i, j)*Q/fourmis.getVisitedLength();
 		}return s;
 		
 	}
@@ -35,7 +35,7 @@ public class Pheromones  {
 	public void setPheromones( Ant[] AntSystem) {
 		for (int i=0; i<m_nbCities; i++) {
 	        for (int j=0; j<m_nbCities; j++){
-	            pheromones[i][j] = pheromones[i][j]*(100-evaporation)/100 + this.NbAntWentThisPath(i,j, AntSystem)*Q/this.getTmpVisitedLength();
-	            pheromones[j][i] = pheromones[j][i]*(100-evaporation)/100 + this.NbAntWentThisPath(j,i, AntSystem)*Q/this.getTmpVisitedLength();  
+	            pheromones[i][j] = pheromones[i][j]*(100-evaporation)/100 + this.DeposedPheromones(i, j, AntSystem);
+	            pheromones[j][i] = pheromones[j][i]*(100-evaporation)/100 + this.DeposedPheromones(j,i , AntSystem);  
 	}}
 }}
