@@ -1,32 +1,33 @@
 package tsp;
 
-public class Pheromones {
+public class Pheromones extends Fourmi {
 	
 	/*Paramètres*/
-	
-	private int m_nbCities; 
-	private float[][] pheromones; /* Tableau indiquant la quantité de pheromones entre chaque ville i et j*/
-	private float evaporation;    /* Taux d'évaporation */
+	public Instance m_instance;
+	public int m_nbCities; 
+	public int Q;
+	public double[][] pheromones; /* Tableau indiquant la quantité de pheromones entre chaque ville i et j*/
+	public double evaporation;    /* Taux d'évaporation */
 	
 	/*Constructeur*/
 	
 	public Pheromones(Instance instance) {    /* Constructeur initialisant la taille du tableau pheromones à m_nbCities^2 */
-		m_nbCities = instance.getNbCities();
 		pheromones = new float[m_nbCities][m_nbCities];
 	}
 	
 	/*Methodes*/
-	public void setPheromones(int origin, int destination, int tmpVisitedlength) {              /* Depose des pheromones entre la ville origin et la ville destination*/
-		pheromones[origin][destination]= pheromones[origin][destination]+100/tmpVisitedlength;
-		pheromones[destination][origin]= pheromones[destination][origin]+100/tmpVisitedlength;
-	}
 	
-	public void evaporatePheromones() {           /* Evapore les pheromones entre les villes i et j */
-		 for (int i=0; i<m_nbCities; i++) {
-		        for (int j=0; j<i; j++){
-		            pheromones[i][j] = pheromones[i][j]*(100-evaporation)/100;
-		            pheromones[j][i] = pheromones[j][i]*(100-evaporation)/100;             
-		        }}
+	public void NbAntWentThisPath(int i, int j) {
+		for (Fourmis fourmis : this.AntSystem) {
+			fourmis.WentThisPath[i][j]
+		}
 		
 	}
-}
+	
+	public void setPheromones() {
+		for (int i=0; i<m_nbCities; i++) {
+	        for (int j=0; j<m_nbCities; j++){
+	            pheromones[i][j] = pheromones[i][j]*(100-evaporation)/100 + this.NbAntWentThisPath(i,j);
+	            pheromones[j][i] = pheromones[j][i]*(100-evaporation)/100 + this.NbAntWentThisPath(j,i);  
+	}}
+}}
