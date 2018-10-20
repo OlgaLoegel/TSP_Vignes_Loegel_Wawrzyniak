@@ -1,6 +1,6 @@
 package tsp;
 
-public class ChoiceNextCity extends Ant {
+public class ChooseNextCity extends Ant {
 
 	public static final int ALPHA=1;
 	public static final int BETA=5;
@@ -12,13 +12,13 @@ public class ChoiceNextCity extends Ant {
 	
 	
 	
-	public ChoiceNextCity(Instance m_instance) {
+	public ChooseNextCity(Instance m_instance) {
 		super(m_instance);
 		this.m_instance = m_instance;
 	}
 	
 	
-	public void ChoiceNextCity(Ant k, int i) {
+	public int chooseNextCity(Ant k, int i) {
 		int max=0;
 	
 		for (int j=0; j<this.citiesStillToVisit.size(); j++) {
@@ -37,7 +37,7 @@ public class ChoiceNextCity extends Ant {
 			
 			e.printStackTrace();
 		}
-		
+		return (max);
 	}
 	
 	
