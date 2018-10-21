@@ -13,10 +13,10 @@ public class Motor {
 	private double p=0.01; 			//quantité initiale de phéromones qu'on dépose sur tous les arcs
 	private Ant[] AntSystem; 		//tableau de fourmis
 	private int Nmax=10;			//nombre de cycles à faire avant d'arrêter le programme
+	public Pheromones pheromones;
+	public ChooseNextCity c;
 	
-	
-	
-	public List<Integer> motor() {
+	public List<Integer> motor()  {
 		
 		//initialisation
 		ArrayList<Integer> shortestWay = new ArrayList<Integer>(); //initialise la liste des villes du chemin plus court
@@ -69,10 +69,10 @@ public class Motor {
 				
 				//pour chaque fourmi, on remet à jour ses données
 				for(Ant a : AntSystem) {
-					int c = ChooseNextCity.chooseNextCity(a,a.currentPosition);
-					toVisit=toVisit.remove(c);
+					int c = this.c.chooseNextCity(a,a.currentPosition);
+					toVisit.remove(c);
 					a.setCitiesStillToVisit(toVisit);
-					visited=visited.add(c);
+					visited.add(c);
 					a.setVisitedCities(visited);
 					a.setVisitedLength(distances[a.getCurrentPosition()][c]);
 					wentThisPath[a.getCurrentPosition()][c]=1;
@@ -83,7 +83,7 @@ public class Motor {
 					
 			N+=1;
 			sameWay=compareWaysCombination();	//retourne true si toutes les fourmies font le même chemin
-			pher=pher.setPheromones();			//remet à jour les pheromones sur tous les arcs
+			this.pheromones.setPheromones(AntSystem, pher);			//remet à jour les pheromones sur tous les arcs
 			shortestWay=compareWaysLength();	//retourne la liste des villes dont le chemin est le plus court parmi tous les chemin parcourues par les fourmis
 			
 		}	
