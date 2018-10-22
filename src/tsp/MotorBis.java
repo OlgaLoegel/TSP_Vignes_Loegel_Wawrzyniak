@@ -82,7 +82,7 @@ public class MotorBis {
 				
 				//pour chaque fourmi, on remet à jour ses données
 				for(Ant a : AntSystem) {
-					int c = this.chooseNextCity(a,a.currentPosition,toVisit);
+					int c = this.chooseNextCity(a,a.currentPosition,toVisit,pher);
 					toVisit.remove(c);
 					a.setCitiesStillToVisit(toVisit);
 					visited.add(c);
@@ -150,23 +150,16 @@ public class MotorBis {
 		return v;
 	}
 	
-	public int chooseNextCity(Ant k, int i, ArrayList<Integer> toVisit) {
+	public int chooseNextCity(Ant k, int i, ArrayList<Integer> toVisit, double[][] pher) {
 		int max=0;
 	
 		for (int j=0; j<toVisit.size(); j++) {
 			
-			if (probability(i,toVisit.get(j)) > max) {  //on choisit une ville selon une probabilité calculée à partir 
+			if (probability(i,toVisit.get(j),toVisit,pher) > max) {  //on choisit une ville selon une probabilité calculée à partir 
 				max=j;									          //du taux de phéromones et de la visibilité des villes non visitées
 			}													  // on conserve la ville correspondant à la proba la + élevée
 		}
 		
-
-		try {
-			this.setVisitedLength(this.VisitedLength + m_instance.getDistances(i, max)); //on ajoute à la longueur totale du trajet déjà effectué cette distance de l’arc parcouru
-		} catch (Exception e) {
-			
-			e.printStackTrace();
-		}
 		return (max);
 	}
 	
