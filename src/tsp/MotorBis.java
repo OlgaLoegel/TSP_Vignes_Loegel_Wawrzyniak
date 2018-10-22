@@ -185,6 +185,7 @@ public class MotorBis {
 		return proba;
 	}
 	
+	
 	public int DeposedPheromones(int i, int j, Ant[] AntSystem) {         /*Si la fourmis a parcouru i->j ou j->i, retourne la quantité de pheromones déposés sur l'arc i-j, sinon retourne 0.*/
 		int s=0;
 		for (Ant ant : AntSystem) {
