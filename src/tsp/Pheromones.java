@@ -17,4 +17,4 @@ public void setPheromones( Ant[] AntSystem, double[][] pheromones, double evapor
         for (int j=0; j<n; j++){
             pheromones[i][j] = pheromones[i][j]*(100-evaporation)/100 + this.DeposedPheromones(i, j, AntSystem, Q);
             pheromones[j][i] = pheromones[j][i]*(100-evaporation)/100 + this.DeposedPheromones(j, i , AntSystem, Q);  
-}}}
+}}
