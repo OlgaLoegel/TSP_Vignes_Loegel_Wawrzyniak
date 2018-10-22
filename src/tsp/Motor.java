@@ -141,8 +141,8 @@ public class Motor {
 	public long visibilite(int i, int j) {
 		long v=0;
 		try {
-			if (m_instance.getDistances(i, j) != 0) {
-			 v=1/m_instance.getDistances(i, j);
+			if (distances[i][j] != 0) {
+			 v=1/distances[i][j];
 			}				
 		} catch (Exception e) {	
 			e.printStackTrace();
@@ -151,12 +151,12 @@ public class Motor {
 		return v;
 	}
 	
-	public int chooseNextCity(Ant k, int i) {
+	public int chooseNextCity(Ant k, int i, ArrayList<Integer> toVisit) {
 		int max=0;
 	
-		for (int j=0; j<this.citiesStillToVisit.size(); j++) {
+		for (int j=0; j<toVisit.size(); j++) {
 			
-			if (probability(i,citiesStillToVisit.get(j)) > max) {  //on choisit une ville selon une probabilité calculée à partir 
+			if (probability(i,toVisit.get(j)) > max) {  //on choisit une ville selon une probabilité calculée à partir 
 				max=j;									          //du taux de phéromones et de la visibilité des villes non visitées
 			}													  // on conserve la ville correspondant à la proba la + élevée
 		}
@@ -172,16 +172,16 @@ public class Motor {
 	}
 	
 	
-	public double probability(int i, int j) {
+	public double probability(int i, int j,ArrayList<Integer> toVisit, double[][] pher) {
 		double proba;
 		double s=0;
-		for (int k=0; k<this.citiesStillToVisit.size(); k++) {
-			if (this.citiesStillToVisit.contains(k)) {
-			s=s+ Math.pow(pheromones.pheromones[k][j], ALPHA) * Math.pow(visibilite.visibilite(i,k), BETA);
+		for (int k=0; k<toVisit.size(); k++) {
+			if (toVisit.contains(k)) {
+			s=s+ Math.pow(pher[k][j], alpha) * Math.pow(visibilite(i,k), beta);
 			}
 		}
 	
-		proba=( Math.pow(this.pheromones.pheromones[i][j], ALPHA) * Math.pow(visibilite.visibilite(i, j), BETA) ) /s;
+		proba=( Math.pow(pher[i][j], alpha) * Math.pow(visibilite(i, j), beta) ) /s;
 		
 		return proba;
 	}
