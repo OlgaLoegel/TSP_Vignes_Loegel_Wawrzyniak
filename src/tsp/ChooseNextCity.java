@@ -28,9 +28,7 @@ public class ChooseNextCity extends Ant {
 			}													  // on conserve la ville correspondant à la proba la + élevée
 		}
 		
-		this.visitedCities.add(max); // on ajoute la ville sur laquelle elle vient d’arriver dans la liste des villes déjà visitées
 
-		this.citiesStillToVisit.remove(max); //on retire cette ville des villes à visiter 
 		try {
 			this.setVisitedLength(this.VisitedLength + m_instance.getDistances(i, max)); //on ajoute à la longueur totale du trajet déjà effectué cette distance de l’arc parcouru
 		} catch (Exception e) {
