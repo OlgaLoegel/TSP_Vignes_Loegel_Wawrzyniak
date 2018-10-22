@@ -16,7 +16,7 @@ package tsp;
  * @version 2017
  * 
  */
-public class TSPSolver {
+public class TSPSolver  {
 
 	// -----------------------------
 	// ----- ATTRIBUTS -------------
@@ -79,6 +79,7 @@ public class TSPSolver {
 		{
 			// TODO
 			// Code a loop base on time here
+			this.motor();
 			spentTime = System.currentTimeMillis() - startTime;
 		}while(spentTime < (m_timeLimit * 1000 - 100) );
 		

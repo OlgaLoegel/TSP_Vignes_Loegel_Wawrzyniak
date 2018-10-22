@@ -29,7 +29,7 @@ public class MotorBis {
 		
 	}
 	
-	public List<Integer> motor()  {
+	public void motor()  {
 		
 		//initialisation
 		ArrayList<Integer> shortestWay = new ArrayList<Integer>(); //initialise la liste des villes du chemin plus court
@@ -101,7 +101,7 @@ public class MotorBis {
 			
 		}	
 		
-		return shortestWay;						//on return le plus court chemin
+							//on return le plus court chemin
 	}
 
 
