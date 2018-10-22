@@ -70,16 +70,17 @@ public class TSPSolver  {
 	public void solve() throws Exception
 	{
 		m_solution.print(System.err);
-		
+		MotorBis m = new MotorBis();
 		
 		// Example of a time loop
 		long startTime = System.currentTimeMillis();
 		long spentTime = 0;
+		m.motor();
 		do
 		{
 			// TODO
 			// Code a loop base on time here
-			this.motor();
+			
 			spentTime = System.currentTimeMillis() - startTime;
 		}while(spentTime < (m_timeLimit * 1000 - 100) );
 		
