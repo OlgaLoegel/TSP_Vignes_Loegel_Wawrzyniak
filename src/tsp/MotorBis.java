@@ -11,11 +11,25 @@ public class MotorBis {
 	private double beta=0.5; 		//paramètre pour attribuer plus ou moins d'importance à la visibilité
 	private double p=0.01; 			//quantité initiale de phéromones qu'on dépose sur tous les arcs
 	private Ant[] AntSystem; 		//tableau de fourmis
-	private int Nmax=10;			//nombre de cycles à faire avant d'arrêter le programme
 	private int Q;
 	private double evaporation;
+	long startTime = System.currentTimeMillis();
+	long spentTime = 0;
 	
-	public MotorBis(int n, int m, long[][] distances, double alpha, double beta, double p, Ant[] AntSystem, int Nmax, double evaporation) {
+	/**
+	 * The Solution that will be returned by the program.
+	 */
+	private Solution m_solution;
+
+	/** The Instance of the problem. */
+	private Instance m_instance;
+
+	/** Time given to solve the problem. */
+	private long m_timeLimit;
+	
+	
+	
+	public MotorBis(int n, int m, long[][] distances, double alpha, double beta, double p, Ant[] AntSystem, int Nmax, double evaporation, Instance instance, long timeLimit) {
 		this.n=n;
 		this.m=m;
 		this.distances=distances;
@@ -23,9 +37,15 @@ public class MotorBis {
 		this.beta=0.5;
 		this.p=0.01;
 		this.AntSystem=AntSystem;
-		this.Nmax=10;
 		this.Q=Q;
 		this.evaporation=evaporation;
+		m_instance = instance;
+		m_solution = new Solution(m_instance);
+		m_timeLimit = timeLimit;
+		
+	}
+	
+	public MotorBis() {
 		
 	}
 	
@@ -53,7 +73,7 @@ public class MotorBis {
 		
 		for (Ant a : AntSystem) {									//pour chaque fourmis :
 			a.setVisitedLength(0);									//met à O la distance parcourue
-			int city = (int) Math.ceil(Math.random()*n);			//donne le numéro d'une ville au hasard
+			int city = 0;											//affecte la ville de départ à 0
 			a.setOriginCity(city);									//attribue cette ville comme ville d'origine (restera inchangée)
 			a.setCurrentPosition(city);								//même ville pour ville où se trouve
 			
@@ -76,7 +96,7 @@ public class MotorBis {
 		
 		
 		//début de la boucle qui opère tant qu'on n'a pas atteint le maximum Nmax ou que les fourmies ne font pas toutes le même chemin
-		while (N!=Nmax || !sameWay) {
+		while (spentTime < (m_timeLimit * 1000 - 100) || !sameWay) {
 			// pour chaque itération :
 			for (int i=0;i<n;i++) {
 				
@@ -95,13 +115,21 @@ public class MotorBis {
 			}
 					
 			N+=1;
-			sameWay=compareWaysCombination();	//retourne true si toutes les fourmies font le même chemin
+			sameWay=compareWaysCombination();								//retourne true si toutes les fourmies font le même chemin
 			this.setPheromones(AntSystem, pher, evaporation, Q);			//remet à jour les pheromones sur tous les arcs
-			shortestWay=compareWaysLength();	//retourne la liste des villes dont le chemin est le plus court parmi tous les chemin parcourues par les fourmis
-			
-		}	
+			shortestWay=compareWaysLength();								//retourne la liste des villes dont le chemin est le plus court parmi tous les chemin parcourues par les fourmis
+			spentTime = System.currentTimeMillis() - startTime;
+		}
+		shortestWay.add(0);
 		
-							//on return le plus court chemin
+		int[] m_cities = new int[n+1];
+		for (int i=0;i<n+1;i++) {
+			m_cities[i]=shortestWay.get(i);
+		}
+		
+		m_objectiveValue=
+		
+							
 	}
 
 
