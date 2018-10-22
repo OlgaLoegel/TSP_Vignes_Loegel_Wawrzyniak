@@ -120,5 +120,70 @@ public class Motor {
 		// TODO Auto-generated method stub
 		return false;
 	}
+	
+	public int DeposedPheromones(int i, int j, Ant[] AntSystem) {         /*Si la fourmis a parcouru i->j ou j->i, retourne la quantité de pheromones déposés sur l'arc i-j, sinon retourne 0.*/
+		int s=0;
+		for (Ant ant : AntSystem) {
+			s+=ant.getWentThisPath(i, j)*Q/ant.getVisitedLength();
+		}return s;
+		
+	}
+	
+	public void setPheromones( Ant[] AntSystem, double[][] pheromones) {       /*Met a jour la quantite de pheronomes present sur tous les arcs*/
+		for (int i=0; i<m_nbCities; i++) {
+	        for (int j=0; j<m_nbCities; j++){
+	            pheromones[i][j] = pheromones[i][j]*(100-evaporation)/100 + this.DeposedPheromones(i, j, AntSystem);
+	            pheromones[j][i] = pheromones[j][i]*(100-evaporation)/100 + this.DeposedPheromones(j, i , AntSystem);  
+	}}}
+	
+	// plus une ville est loin, moins elle a de chance d’être choisie =« visibilité »
+	
+	public long visibilite(int i, int j) {
+		long v=0;
+		try {
+			if (m_instance.getDistances(i, j) != 0) {
+			 v=1/m_instance.getDistances(i, j);
+			}				
+		} catch (Exception e) {	
+			e.printStackTrace();
+		}
+				
+		return v;
+	}
+	
+	public int chooseNextCity(Ant k, int i) {
+		int max=0;
+	
+		for (int j=0; j<this.citiesStillToVisit.size(); j++) {
+			
+			if (probability(i,citiesStillToVisit.get(j)) > max) {  //on choisit une ville selon une probabilité calculée à partir 
+				max=j;									          //du taux de phéromones et de la visibilité des villes non visitées
+			}													  // on conserve la ville correspondant à la proba la + élevée
+		}
+		
+
+		try {
+			this.setVisitedLength(this.VisitedLength + m_instance.getDistances(i, max)); //on ajoute à la longueur totale du trajet déjà effectué cette distance de l’arc parcouru
+		} catch (Exception e) {
+			
+			e.printStackTrace();
+		}
+		return (max);
+	}
+	
+	
+	public double probability(int i, int j) {
+		double proba;
+		double s=0;
+		for (int k=0; k<this.citiesStillToVisit.size(); k++) {
+			if (this.citiesStillToVisit.contains(k)) {
+			s=s+ Math.pow(pheromones.pheromones[k][j], ALPHA) * Math.pow(visibilite.visibilite(i,k), BETA);
+			}
+		}
+	
+		proba=( Math.pow(this.pheromones.pheromones[i][j], ALPHA) * Math.pow(visibilite.visibilite(i, j), BETA) ) /s;
+		
+		return proba;
+	}
 
 }
