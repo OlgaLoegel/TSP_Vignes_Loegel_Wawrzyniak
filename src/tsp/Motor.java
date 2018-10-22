@@ -83,7 +83,7 @@ public class Motor {
 				
 				//pour chaque fourmi, on remet à jour ses données
 				for(Ant a : AntSystem) {
-					int c = this.c.chooseNextCity(a,a.currentPosition);
+					int c = this.chooseNextCity(a,a.currentPosition);
 					toVisit.remove(c);
 					a.setCitiesStillToVisit(toVisit);
 					visited.add(c);
@@ -97,7 +97,7 @@ public class Motor {
 					
 			N+=1;
 			sameWay=compareWaysCombination();	//retourne true si toutes les fourmies font le même chemin
-			this.pheromones.setPheromones(AntSystem, pher, evaporation, Q);			//remet à jour les pheromones sur tous les arcs
+			this.setPheromones(AntSystem, pher, evaporation, Q);			//remet à jour les pheromones sur tous les arcs
 			shortestWay=compareWaysLength();	//retourne la liste des villes dont le chemin est le plus court parmi tous les chemin parcourues par les fourmis
 			
 		}	
