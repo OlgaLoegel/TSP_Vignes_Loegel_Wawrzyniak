@@ -7,14 +7,28 @@ public class Motor {
 	
 	private int n; 					//nb villes
 	private int m; 					//nbfourmies
-	private long[][] distances; 	//disances entre villes à récupérer dans données
-	private double alpha=0.5;		// paramètre pour attribuer plus ou moins d'importance aux phéromones
+	private long[][] distances; 	//distances entre villes à récupérer dans données
+	private double alpha=0.5;		//paramètre pour attribuer plus ou moins d'importance aux phéromones
 	private double beta=0.5; 		//paramètre pour attribuer plus ou moins d'importance à la visibilité
 	private double p=0.01; 			//quantité initiale de phéromones qu'on dépose sur tous les arcs
 	private Ant[] AntSystem; 		//tableau de fourmis
 	private int Nmax=10;			//nombre de cycles à faire avant d'arrêter le programme
-	public Pheromones pheromones;
-	public ChooseNextCity c;
+	private int Q;
+	private double evaporation;
+	
+	public Motor (int n, int m, long[][] distances, double alpha, double beta, double p, Ant[] AntSystem, int Nmax, double evaporation) {
+		this.n=n;
+		this.m=m;
+		this.distances=distances;
+		this.alpha=0.5;
+		this.beta=0.5;
+		this.p=0.01;
+		this.AntSystem=AntSystem;
+		this.Nmax=10;
+		this.Q=Q;
+		this.evaporation=evaporation;
+		
+	}
 	
 	public List<Integer> motor()  {
 		
@@ -83,7 +97,7 @@ public class Motor {
 					
 			N+=1;
 			sameWay=compareWaysCombination();	//retourne true si toutes les fourmies font le même chemin
-			this.pheromones.setPheromones(AntSystem, pher);			//remet à jour les pheromones sur tous les arcs
+			this.pheromones.setPheromones(AntSystem, pher, evaporation, Q);			//remet à jour les pheromones sur tous les arcs
 			shortestWay=compareWaysLength();	//retourne la liste des villes dont le chemin est le plus court parmi tous les chemin parcourues par les fourmis
 			
 		}	
