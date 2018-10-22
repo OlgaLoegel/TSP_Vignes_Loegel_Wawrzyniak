@@ -83,7 +83,7 @@ public class Motor {
 				
 				//pour chaque fourmi, on remet à jour ses données
 				for(Ant a : AntSystem) {
-					int c = this.chooseNextCity(a,a.currentPosition);
+					int c = this.chooseNextCity(a,a.currentPosition,toVisit);
 					toVisit.remove(c);
 					a.setCitiesStillToVisit(toVisit);
 					visited.add(c);
