@@ -76,13 +76,7 @@ public class TSPSolver  {
 		long startTime = System.currentTimeMillis();
 		long spentTime = 0;
 		m.motor();
-		do
-		{
-			// TODO
-			// Code a loop base on time here
-			
-			spentTime = System.currentTimeMillis() - startTime;
-		}while(spentTime < (m_timeLimit * 1000 - 100) );
+	
 		
 	}
 
