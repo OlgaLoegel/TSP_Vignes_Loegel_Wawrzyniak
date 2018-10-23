@@ -44,6 +44,7 @@ public class TSPSolver  {
 	 * @param timeLimit the time limit in seconds
 	 */
 	public TSPSolver(Instance instance, long timeLimit) {
+		super();
 		m_instance = instance;
 		m_solution = new Solution(m_instance);
 		m_timeLimit = timeLimit;
@@ -68,13 +69,9 @@ public class TSPSolver  {
 	 * @throws Exception may return some error, in particular if some vertices index are wrong.
 	 */
 	public void solve() throws Exception
-	{
+		{
 		m_solution.print(System.err);
 		MotorBis m = new MotorBis();
-		
-		// Example of a time loop
-		long startTime = System.currentTimeMillis();
-		long spentTime = 0;
 		m.motor();
 	
 		

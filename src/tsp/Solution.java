@@ -275,4 +275,10 @@ public class Solution{
 	public String getError() {
 		return m_error;
 	}
+
+	public void setM_cities(int[] m_cities) {
+		this.m_cities = m_cities;
+	}
+	
+	
 }
