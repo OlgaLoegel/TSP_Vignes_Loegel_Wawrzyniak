@@ -126,7 +126,8 @@ public class MotorBis {
 				//pour chaque fourmi, on remet à jour ses données
 				for(Ant a : AntSystem) {
 					int c = this.chooseNextCity(a,a.currentPosition,a.citiesStillToVisit,pher);
-					a.citiesStillToVisit.remove(c);
+					if (a.citiesStillToVisit.size()!=0) {  // A REVOIR
+					a.citiesStillToVisit.remove(c);}
 					a.visitedCities.add(c);
 					a.VisitedLength=a.VisitedLength+distances[a.getCurrentPosition()][c];
 					a.WentThisPath[a.getCurrentPosition()][c]=1;
@@ -203,8 +204,9 @@ public class MotorBis {
 	public int DeposedPheromones(int i, int j, Ant[] AntSystem, int Q) {     
 		int s=0;
 		for (Ant ant : AntSystem) {
+			if (ant.getVisitedLength()!=0) {                          //A REVOIR
 			s+=ant.getWentThisPath(i, j)*Q/ant.getVisitedLength();
-		}return s;
+		}}return s;
 		
 	}
 
