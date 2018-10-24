@@ -27,6 +27,7 @@ public class TSPSolver  {
 	 */
 	private Solution m_solution;
 
+	
 	/** The Instance of the problem. */
 	private Instance m_instance;
 

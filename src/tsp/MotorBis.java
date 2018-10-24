@@ -85,6 +85,7 @@ public class MotorBis {
 			}
 		}
 		
+		
 		for (Ant a : AntSystem) {									//pour chaque fourmis :
 			a.setVisitedLength(0);									//met à O la distance parcourue
 			a.setCurrentPosition(0);								//donne la position de départ					

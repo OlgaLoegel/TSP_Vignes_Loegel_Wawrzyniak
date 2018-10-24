@@ -77,6 +77,7 @@ public class Solution{
 	 */
 	private int[] m_cities;
 
+	
 	/**
 	 * Route cost or length (objective function).<br>
 	 * This value should be updated when the solution is modified with:
