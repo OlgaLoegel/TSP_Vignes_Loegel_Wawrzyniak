@@ -21,13 +21,11 @@ public class Ant {
      @ param m_instance donnée du problème associée à la solution
     */
     public Ant(Instance m_instance) {
-    	super();
     	this.m_instance=m_instance;
     	this.visitedCities= new ArrayList<Integer>();
-    	for (int i=1; i<=m_instance.getNbCities(); i++) {
-    	     this.visitedCities.add(i);
-    	     }
-
+    	this.citiesStillToVisit= new ArrayList<Integer>();
+    	this.currentPosition=0;
+        this.WentThisPath= new int[m_instance.getNbCities()][m_instance.getNbCities()];
         this.VisitedLength=0;
         }
     
