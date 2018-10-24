@@ -25,9 +25,10 @@ public class Ant {
     	this.visitedCities= new ArrayList<Integer>();
     	this.citiesStillToVisit= new ArrayList<Integer>();
     	this.currentPosition=0;
+    	
         for (int i =0; i<m_instance.getNbCities(); i++) {
         	for (int j =0; j<m_instance.getNbCities(); j++) {
-        		WentThisPath[i][j]=0;
+        		this.WentThisPath[i][j]=0;
         	}
         	
         }
