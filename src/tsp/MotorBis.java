@@ -4,17 +4,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MotorBis {
-	private int n; 					//nb villes
-	private int m; 				//nbfourmies
-	private long[][] distances; 	//distances entre villes à récupérer dans données
-	private double alpha;		//paramètre pour attribuer plus ou moins d'importance aux phéromones
-	private double beta; 		//paramètre pour attribuer plus ou moins d'importance à la visibilité
-	private double p; 			//quantité initiale de phéromones qu'on dépose sur tous les arcs
-	private Ant[] AntSystem; 		//tableau de fourmis
-	private int Q;
-	private double evaporation;
-	long startTime = System.currentTimeMillis();
-	long spentTime = 0;
+	private int n; 													//nb villes
+	private int m; 													//nbfourmies
+	private long[][] distances; 										//distances entre villes à récupérer dans données
+	private double alpha;											//paramètre pour attribuer plus ou moins d'importance aux phéromones
+	private double beta; 											//paramètre pour attribuer plus ou moins d'importance à la visibilité
+	private double p; 												//quantité initiale de phéromones qu'on dépose sur tous les arcs
+	private Ant[] AntSystem; 										//tableau de fourmis
+	private int Q;													// constante liée à la quantité de phéromones déposée
+	private double evaporation;										// constante liée à la quantité de phéromones évaporée
+	long startTime = System.currentTimeMillis();						// début du chronomètre
+	long spentTime = 0;												// temps écoulé depuis le début du chronomètre
+	
 	
 	/**
 	 * The Solution that will be returned by the program.
@@ -28,7 +29,18 @@ public class MotorBis {
 	private long m_timeLimit;
 	
 	
-	
+	/** 
+     * Contructeur de la classe MotorBis 
+     @param int nombre de fourmis
+     @param double nombre attribuant plus ou moins d'importance aux phéromones
+     @param double nombre attribuant plus ou moins d'importance à la visibilité
+     @param double quantité initiale de phéromones qu'on dépose sur tous les arcs
+     @param int constante liée à la quantité de phéromones déposée
+     @param double constante liée à la quantité de phéromones évaporée
+     @param Instance l'instance du problème
+     @param long temps imposé pour résoudre le problème
+     @ param m_instance donnée du problème associée à la solution
+    */
 	public MotorBis(int m, double alpha, double beta, double p, int Q, double evaporation, Instance instance, long timeLimit) {
 		this.n=instance.getNbCities();
 		this.m=m;
@@ -45,7 +57,9 @@ public class MotorBis {
 		
 	}
 
-
+    /** 
+     * Mise à jour de la solution 
+    */
 	public void motor()  {
 		
 		//initialisation
@@ -147,8 +161,10 @@ public class MotorBis {
 	
 
 
-//Méthodes à faire pour compléter la méthode monitor
 
+    /** 
+     * méthode qui complète la méthode monitor
+    */
 	private int compareTo(Ant[] AntSystem, long shortest) {
 		int i = -1; 
 		int theFourmi = 0;
@@ -163,13 +179,23 @@ public class MotorBis {
 	}	
 
 
-
+	 /** 
+     * Renvoie true si toutes les fourmis effectuent le même chemin, false sinon
+    */
 	private boolean compareWaysCombination() {
 		// TODO Auto-generated method stub
 		return false;
 	}
 	
-	public int DeposedPheromones(int i, int j, Ant[] AntSystem, int Q) {         /*Si la fourmis a parcouru i->j ou j->i, retourne la quantité de pheromones déposés sur l'arc i-j, sinon retourne 0.*/
+	
+	/** 
+     *Si la fourmis a parcouru i->j ou j->i, retourne la quantité de pheromones déposés sur l'arc i-j, sinon retourne 0
+     @param int ville où se trouve actuellement la fourmi
+     @param int ville où se rend la fourmi
+     @param Ant[] tableau de fourmis
+     @param int constante liée à la quantité de phéromones déposée
+    */
+	public int DeposedPheromones(int i, int j, Ant[] AntSystem, int Q) {     
 		int s=0;
 		for (Ant ant : AntSystem) {
 			s+=ant.getWentThisPath(i, j)*Q/ant.getVisitedLength();
@@ -177,6 +203,12 @@ public class MotorBis {
 		
 	}
 
+	
+	 /** 
+     * Renvoie true si toutes les fourmis effectuent le même chemin, false sinon
+     @param Ant [] tableau de fourmis
+     @param double [][] 
+    */
 	public void setPheromones( Ant[] AntSystem, double[][] pheromones, double evaporation, int Q) {       /*Met a jour la quantite de pheronomes present sur tous les arcs*/
 		for (int i=0; i<n; i++) {
 	        for (int j=0; j<n; j++){
