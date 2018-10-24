@@ -209,11 +209,13 @@ public class MotorBis {
 
 	
 	 /** 
-     * Renvoie true si toutes les fourmis effectuent le même chemin, false sinon
+     * Met a jour la quantite de pheronomes present sur tous les arcs
      @param Ant [] tableau de fourmis
-     @param double [][] 
+     @param double [][] tableau indiquant les quantités de phéromones 
+     @param double constante liée à la quantité de phéromones évaporée
+     @param int constante liée à la quantité de phéromones déposée
     */
-	public void setPheromones( Ant[] AntSystem, double[][] pheromones, double evaporation, int Q) {       /*Met a jour la quantite de pheronomes present sur tous les arcs*/
+	public void setPheromones( Ant[] AntSystem, double[][] pheromones, double evaporation, int Q) {      
 		for (int i=0; i<n; i++) {
 	        for (int j=0; j<n; j++){
 	            pheromones[i][j] = pheromones[i][j]*(100-evaporation)/100 + this.DeposedPheromones(i, j, AntSystem, Q);
