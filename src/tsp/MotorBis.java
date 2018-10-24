@@ -42,15 +42,16 @@ public class MotorBis {
      @ param m_instance donnée du problème associée à la solution
     */
 	public MotorBis(int m, double alpha, double beta, double p, int Q, double evaporation, Instance instance, long timeLimit) {
-		m_instance = instance;
+		this.m_instance = instance;
 		this.n=instance.getNbCities();
 		this.m=m;
 		this.distances=instance.getDistances();
 		this.alpha=alpha;
 		this.beta=beta;
 		this.p=p;
+		this.AntSystem = new Ant[m];
 		for (int i=0; i<m; i++) {
-			AntSystem[i]=new Ant(m_instance);
+			AntSystem[i]=new Ant(instance);
 		}
 		
 		this.Q=Q;
