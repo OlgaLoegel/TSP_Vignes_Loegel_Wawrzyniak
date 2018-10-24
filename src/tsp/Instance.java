@@ -433,7 +433,7 @@ public class Instance {
 	 * symmetric, the distance from city i to city j is equal to the
 	 * distance from j to i.
 	 * 
-	 * @param i origin city (should range between 0 and nbcity-1).
+	 * @param i origin city (should range between 0 and nbcity-1)
 	 * @param j destination city (should range between 0 and nbcity-1).
 	 * @return Returns the euclidean distance from i to j rounded to the nearest
 	 *         integer value
