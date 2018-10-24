@@ -36,7 +36,10 @@ public class MotorBis {
 		this.alpha=alpha;
 		this.beta=beta;
 		this.p=p;
-		this.AntSystem=new Ant[m];
+		for (int i=0; i<m; i++) {
+			AntSystem[i]=new Ant(m_instance);
+		}
+		
 		this.Q=Q;
 		this.evaporation=evaporation;
 		m_instance = instance;
