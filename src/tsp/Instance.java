@@ -447,6 +447,7 @@ public class Instance {
 			throw new Exception("Error : city index " + j + " should range between 0 and " + (m_nbCities - 1) + ".");
 		}
 		return m_distances[i][j];
+		
 	}
 
 	/**

@@ -13,7 +13,7 @@ public class Ant {
     public long VisitedLength;                     // distance déjà parcourue par la fourmi //
     public int[][] WentThisPath;                   // tableau de 0 et de 1 indiquant 0 en [i][j] et [j][i] lorsque la fourmi a emprunté le chemin i->j (ou j->i), 0 sinon.   
 
-    /*  
+    /** 
      * Contructeur de la classe fourmi 
      * on ajoute à la liste solution les villes visitées 
      * l'origine est attribuée à la ville d'origine de la fourmi
@@ -32,7 +32,7 @@ public class Ant {
         }
     
     
-    /*
+    /**
      * retourne 1 si la fourmi a emprunté le chemin i->j (ou j->i), 0 sinon
      @param int la ville où se trouve actuellement la fourmi
      @param int la prochaine ville à visiter
@@ -42,7 +42,7 @@ public class Ant {
 }
 
 
-	/*
+	/**
 	 * on indique 1 si la fourmi a emprunté le chemin i->j (ou j->i), 0 sinon
 	 @param int la ville où se trouve actuellement la fourmi
      @param int la prochaine ville à visiter
@@ -52,21 +52,21 @@ public class Ant {
 }
 
   
-	/*
+	/**
 	 * Retourne la liste des villes visitées par la fourmi
 	 */
 	 public ArrayList<Integer> getVisitedCities(){
         return this.visitedCities; 
 }
 	 
-	 /*
+	 /**
 	 * Retourne la liste des villes encore à visiter par la fourmi
 	 */
    public ArrayList<Integer> getCitiesStillToVisit(){
 	   return this.citiesStillToVisit;
    }
   
-   /*
+   	/**
 	 * Remplace la liste des villes encore à visiter par la fourmi par la liste indiquée en paramètre
 	 @param ArrayList<Integer> liste des villes à visiter 
 	 */
@@ -74,7 +74,7 @@ public class Ant {
 	   this.citiesStillToVisit= citiesToVisit;
    }
 
-   /*
+   /**
 	 * Retourne la distance déjà parcourue par la fourmi
 	 */
    public long getVisitedLength() {
@@ -82,7 +82,7 @@ public class Ant {
  	}
    
 
-   /*
+   /**
 	 * Retourne la position actuelle de la fourmi
 	 */
    public int getCurrentPosition() {
@@ -90,7 +90,7 @@ public class Ant {
    }
 
 
-   /*
+   /**
 	 * Remplace la liste des villes visitées par la fourmi par la liste indiquée en paramètre
 	 @param ArrayList<Integer> liste des villes visitées
 	 */
@@ -99,7 +99,7 @@ public class Ant {
 }
 
   
-    /*
+    /**
 	 * Remplace la distance parcourue par la fourmi par la distance indiquée en paramètre
 	 @param long distance parcourue par la fourmi
 	 */
@@ -107,7 +107,7 @@ public class Ant {
 		this.VisitedLength = VisitedLength;
 	}
 
-	/*
+	/**
 	 * Remplace la position actuelle de la fourmi par la position indiquée en paramètre
 	 @param int position actuelle de la fourmi
 	 */
