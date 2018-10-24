@@ -60,8 +60,8 @@ public class MotorBis {
 		shortestWay.add(0);											//on oublie pas de boucler le cycle en revenant à 0
 		
 		long shortest=0;											//on initialise la plus courte distance à la première combinaison de shortestWay
-		for(int u=0;u<this.n+1;u++) {
-			shortest += distances[shortestWay.get(u)][shortestWay.get(u+1)];
+		for(int e=0;e<this.n+1;e++) {
+			shortest += distances[shortestWay.get(e)][shortestWay.get(e+1)];
 		}
 		
 		
