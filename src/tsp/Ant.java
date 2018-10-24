@@ -6,7 +6,6 @@ import java.util.ArrayList;
 public class Ant {
 
 	public Instance m_instance;
-	public int originCity;                          // ville d'origine de la fourmi
 	public ArrayList<Integer> visitedCities;        // liste de toutes les villes visitées par la fourmi
     public ArrayList<Integer> citiesStillToVisit;    // liste de toutes les villes encore à visiter
     public int currentPosition;                    // position actuelle de la fourmi //
@@ -27,8 +26,6 @@ public class Ant {
     	for (int i=1; i<=m_instance.getNbCities(); i++) {
     	     this.visitedCities.add(i);
     	     }
-
-    	this.originCity= originCity;
 
         this.VisitedLength=0;
         }

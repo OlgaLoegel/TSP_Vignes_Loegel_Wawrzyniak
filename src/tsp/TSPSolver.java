@@ -32,6 +32,19 @@ public class TSPSolver  {
 
 	/** Time given to solve the problem. */
 	private long m_timeLimit;
+	
+	
+	private int n; 					//nb villes
+	private int m=10; 				//nbfourmies
+	private long[][] distances; 	//distances entre villes à récupérer dans données
+	private double alpha=1;		//paramètre pour attribuer plus ou moins d'importance aux phéromones
+	private double beta=1; 		//paramètre pour attribuer plus ou moins d'importance à la visibilité
+	private double p=0.5; 			//quantité initiale de phéromones qu'on dépose sur tous les arcs
+	private Ant[] AntSystem; 		//tableau de fourmis
+	private int Q=100;
+	private double evaporation=0.5;
+	long startTime = System.currentTimeMillis();
+	long spentTime = 0;
 
 	
 	// -----------------------------
@@ -70,10 +83,12 @@ public class TSPSolver  {
 	 */
 	public void solve() throws Exception
 		{
+		
+		
+		MotorBis mom = new MotorBis(m, alpha, beta, p, Q, evaporation, m_instance, m_timeLimit);
+		mom.motor();
+		mom.getM_solution();
 		m_solution.print(System.err);
-		MotorBis m = new MotorBis();
-		m.motor();
-	
 		
 	}
 
