@@ -108,41 +108,43 @@ public class MotorBis {
 		
 		for (Ant a : AntSystem) {									//pour chaque fourmis :
 			a.setVisitedLength(0);									//met à O la distance parcourue
-			a.setCurrentPosition(0);								//donne la position de départ					
-			a.setVisitedCities(visited);							//attribue la liste vide à la liste des villes visitées
+			a.setCurrentPosition(0);									//donne la position de départ					
+			a.setVisitedCities(visited);								//attribue la liste visited à la liste des villes visitées
 			a.setCitiesStillToVisit(toVisit);						//on attribue cette ville a la liste des villes à visiter pour chaque fourmis		
-			a.WentThisPath=wentThisPath;							//attribue le tableau initialisé à l'attribue wentThisPath de chaque fourmi a
+			a.WentThisPath=wentThisPath;								//attribue le tableau initialisé à l'attribue wentThisPath de chaque fourmi a
 
 		}
 		
 		//fin initialisation
 		
 		
-		//début de la boucle qui opère tant qu'on n'a pas atteint le temps max ou que les fourmies ne font pas toutes le même chemin
+		//début de la boucle qui opère tant qu'on n'a pas atteint le temps max ou que les fourmis ne font pas toutes le même chemin
 		while (spentTime < (m_timeLimit * 1000 - 100) || !sameWay) {
 			// pour chaque itération : (ie : on fait un cycle)
-			for (int b=0;b<this.n;b++) {
+			for (int b=0;b<this.n-1;b++) {  														// on s'arrête à b=n-1 car la fourmi doit déjà rentrer
 				
 				//pour chaque fourmi, on remet à jour ses données
 				for(Ant a : AntSystem) {
 					int c = this.chooseNextCity(a,a.currentPosition,a.citiesStillToVisit,pher);
-					if (a.citiesStillToVisit.size()!=0) {  // A REVOIR
-					a.citiesStillToVisit.remove(c);}
+					if (a.citiesStillToVisit.size()!=0) { 										 // A REVOIR
+					a.citiesStillToVisit.remove(c);
+					}
 					a.visitedCities.add(c);
 					a.VisitedLength=a.VisitedLength+distances[a.getCurrentPosition()][c];
 					a.WentThisPath[a.getCurrentPosition()][c]=1;
 					a.setCurrentPosition(c);
 				}
 				
+				
 			}
 			
-			for (Ant a: AntSystem) {										//on n'oublie pas de revenir à la case départ pour toutes les fourmies
+			for (Ant a: AntSystem) {										//on n'oublie pas de revenir à la case départ pour toutes les fourmis
 				a.visitedCities.add(0);
 				a.WentThisPath[a.getCurrentPosition()][0]=1;
 				a.VisitedLength=a.VisitedLength+distances[a.getCurrentPosition()][0];
 			}
 
-			sameWay=compareWaysCombination();										//retourne true si toutes les fourmies font le même chemin
+			sameWay=compareWaysCombination();										//retourne true si toutes les fourmis font le même chemin
 			
 			this.setPheromones(AntSystem, pher, evaporation, Q);					//remet à jour les pheromones sur tous les arcs
 			
