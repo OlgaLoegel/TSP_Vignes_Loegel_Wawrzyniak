@@ -134,7 +134,7 @@ public class MotorBis {
 					a.WentThisPath[a.getCurrentPosition()][c]=1;
 					a.setCurrentPosition(c);
 				}
-				
+				 
 				
 			}
 			
