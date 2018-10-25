@@ -87,9 +87,9 @@ public class TSPSolver  {
 		{
 		
 		
-		MotorBis mom = new MotorBis(m, alpha, beta, p, Q, evaporation, m_instance, m_timeLimit);
+		MotorBis mom = new MotorBis(m, alpha , beta, p, Q, evaporation, m_instance, m_timeLimit);
 		mom.motor();
-		mom.getM_solution();
+		m_solution=mom.getM_solution();
 		m_solution.print(System.err);
 		
 	}
