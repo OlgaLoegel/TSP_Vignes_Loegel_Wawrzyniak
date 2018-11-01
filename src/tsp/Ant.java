@@ -12,7 +12,7 @@ public class Ant {
     public int currentPosition;                    // position actuelle de la fourmi //
     public long VisitedLength;                     // distance déjà parcourue par la fourmi //
     public int[][] WentThisPath;                   // tableau de 0 et de 1 indiquant 0 en [i][j] et [j][i] lorsque la fourmi a emprunté le chemin i->j (ou j->i), 0 sinon.   
-
+    public int VilleDepart;
     /** 
      * Contructeur de la classe fourmi 
      * on ajoute à la liste solution les villes visitées 
