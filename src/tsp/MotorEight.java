@@ -1,9 +1,9 @@
 package tsp;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
-public class MotorSeven {
+public class MotorEight {
+	
 	private int n; 													//nb villes
 	private int m; 													//nbfourmies
 	private long[][] distances; 										//distances entre villes à récupérer dans données
@@ -41,7 +41,7 @@ public class MotorSeven {
      @param long temps imposé pour résoudre le problème
      @ param m_instance donnée du problème associée à la solution
 	 */
-	public MotorSeven(int m, double alpha, double beta, double p, int Q, double evaporation, Instance instance, long timeLimit) {
+	public MotorEight(int m, double alpha, double beta, double p, int Q, double evaporation, Instance instance, long timeLimit) {
 		this.m_instance = instance;
 		this.n=instance.getNbCities();
 		this.m=m;
@@ -75,23 +75,33 @@ public class MotorSeven {
 		
 		int z=0;
 		
+		double[][] pher=new double[n][n]; 							//tableau des phéromones
+		
+		
+		float[][] vis=new float[n][n]; 								//création tableau des visibilités 
+		for (int i=0;i<n;i++) {										//initialisation tableau de visibilité
+			for (int j=0;j<n;j++) {
+				vis[i][j]=visibilite(i, j);
+			}
+		}
+		
 		while (spentTime < (m_timeLimit * 1000 - 100) && !sameWay) {
-		z++;
-		//initialisation
+			z++;
+			//initialisation
 		
 	    
 		
-		for (Ant a : AntSystem) {									//pour chaque fourmis :
-			a.VilleDepart= (int) (Math.random()*(n));
-			a.setVisitedLength(0);									//met à O la distance parcourue
-			a.setCurrentPosition(a.VilleDepart);									//donne la position de départ					
-			a.setVisitedCities(new ArrayList<Integer>());								//attribue la liste visited à la liste des villes visitées
-			a.visitedCities.add(a.VilleDepart);
-			a.setCitiesStillToVisit(new ArrayList<Integer>());						//on attribue cette ville a la liste des villes à visiter pour chaque fourmis		
-			for (int l=1;l<n;l++) {										//remplit la liste vide des villes restantes à visiter
-				if (l!=a.VilleDepart) {
-				//on ne met pas dans la liste la ville d'origine qui sera choisie la dernière (ici, 0)
-				a.citiesStillToVisit.add(l);}
+			for (Ant a : AntSystem) {									//pour chaque fourmis :
+				a.VilleDepart= (int) (Math.random()*(n));
+				a.setVisitedLength(0);									//met à O la distance parcourue
+				a.setCurrentPosition(a.VilleDepart);									//donne la position de départ					
+				a.setVisitedCities(new ArrayList<Integer>());								//attribue la liste visited à la liste des villes visitées
+				a.visitedCities.add(a.VilleDepart);
+				a.setCitiesStillToVisit(new ArrayList<Integer>());						//on attribue cette ville a la liste des villes à visiter pour chaque fourmis		
+				for (int l=0;l<n;l++) {										//remplit la liste vide des villes restantes à visiter
+					if (l!=a.VilleDepart) {
+						//on ne met pas dans la liste la ville d'origine qui sera choisie la dernière (ici, 0)
+						a.citiesStillToVisit.add(l);}
 			}
 		
 			for(int h=0;h<n;h++) {
@@ -109,71 +119,66 @@ public class MotorSeven {
 
 							//aucune fourmi ne fait le même cycle (car pas de cycle de fait)
 
-		float[][] vis=new float[n][n]; 								//création tableau des visibilités 
-		for (int i=0;i<n;i++) {										//initialisation tableau de visibilité
-			for (int j=0;j<n;j++) {
-				vis[i][j]=visibilite(i, j);
-			}
-		}
-
-		double[][] pher=new double[n][n]; 							//tableau des phéromones
-		for (int k=0;k<n;k++) {										//initialise le tableau de pheromones 
-			for (int j=0;j<n;j++) {
-				pher[k][j]=p;
-			}
-		}
-		
+				
 	
 
 		
 
-		//fin initialisation
-        if (z==1) {
-        	for (int b=0;b<n-1;b++) {  												// on s'arrête à b=n-1 car la fourmi doit déjà rentrer
-			//pour chaque fourmi, on remet à jour ses données
-			for(Ant a : AntSystem) {
+			//fin initialisation
+			if (z==1) {
+				for (int b=0;b<n-1;b++) {  												// on s'arrête à b=n-1 car la fourmi doit déjà rentrer
+					//pour chaque fourmi, on remet à jour ses données
+					for(Ant a : AntSystem) {
 					
 				
-				int c = (int)(Math.random()*a.citiesStillToVisit.size());
+						int c = (int)(Math.random()*a.citiesStillToVisit.size());
 			
 			
-				if (a.citiesStillToVisit.size()>0) { 										                              // A REVOIR
-					a.citiesStillToVisit.remove(a.citiesStillToVisit.get(c));
-				}
-				a.visitedCities.add(c);
-				a.VisitedLength=a.VisitedLength+distances[a.getCurrentPosition()][c];
-				a.WentThisPath[a.getCurrentPosition()][c]=1;
-				a.WentThisPath[c][a.getCurrentPosition()]=1;
+						a.citiesStillToVisit.remove(a.citiesStillToVisit.get(c));
 				
-				a.setCurrentPosition(c);	
+						a.visitedCities.add(c);
+						a.VisitedLength=a.VisitedLength+distances[a.getCurrentPosition()][c];
+						a.WentThisPath[a.getCurrentPosition()][c]=1;
+						a.WentThisPath[c][a.getCurrentPosition()]=1;
+				
+						a.setCurrentPosition(c);	
+					}	
+			
+
+
+				}
+        	
+				for (int k=0;k<n;k++) {										//initialise le tableau de pheromones 
+					for (int j=0;j<n;j++) {
+						pher[k][j]=p;
+					}
+				}
+        	
+				spentTime = System.currentTimeMillis() - startTime;
 			}
-
-
-		}}
 		
 
 		//début de la boucle qui opère tant qu'on n'a pas atteint le temps max ou que les fourmis ne font pas toutes le même chemin
 		
 			// pour chaque itération : (ie : on fait un cycle)
-		if (z>1) {
+			if (z>1) {
 			
-		for (int b=0;b<n-1;b++) {  														// on s'arrête à b=n-1 car la fourmi doit déjà rentrer
+				for (int b=0;b<n-1;b++) {  														// on s'arrête à b=n-1 car la fourmi doit déjà rentrer
 				//pour chaque fourmi, on remet à jour ses données
-				for(Ant a : AntSystem) {
-					int c = this.chooseNextCity(a,a.currentPosition,pher);
-					if (a.citiesStillToVisit.size()!=0) { 										 // A REVOIR
+					for(Ant a : AntSystem) {
+						int c = this.chooseNextCity(a,a.currentPosition,pher);
 						a.citiesStillToVisit.remove(a.citiesStillToVisit.indexOf(c));
-					}
-					a.visitedCities.add(c);
-					a.VisitedLength=a.VisitedLength+distances[a.getCurrentPosition()][c];
-					a.WentThisPath[a.getCurrentPosition()][c]=1;
-					a.WentThisPath[c][a.getCurrentPosition()]=1;
+						a.visitedCities.add(c);
+						a.VisitedLength=a.VisitedLength+distances[a.getCurrentPosition()][c];
+						a.WentThisPath[a.getCurrentPosition()][c]=1;
+						a.WentThisPath[c][a.getCurrentPosition()]=1;
 					
-					a.setCurrentPosition(c);
+						a.setCurrentPosition(c);
+					}
+
+
 				}
-
-
-			}}
+			}
 		  
 			for (Ant a: AntSystem) {										//on n'oublie pas de revenir à la case départ pour toutes les fourmis
 				a.visitedCities.add(a.VilleDepart);
@@ -209,12 +214,6 @@ public class MotorSeven {
 
 
 
-
-
-	private Object z(int i) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 	/** 
 	 * méthode qui complète la méthode monitor
@@ -332,4 +331,5 @@ public class MotorSeven {
 	}
      
 	
+
 }
