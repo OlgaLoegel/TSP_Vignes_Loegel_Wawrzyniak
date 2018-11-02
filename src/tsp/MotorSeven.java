@@ -189,7 +189,7 @@ public class MotorSeven {
 			
 			
 			shortest=AntSystem[compareTo(AntSystem, shortest)].VisitedLength;		//remplace par la nouvelle plus courte longueur trouvée au cours du cyle précédent si plus courte qu'avant
-
+			System.out.println(""+shortest);
 			shortestWay=AntSystem[compareTo(AntSystem, shortest)].visitedCities;	//retourne la liste des villes dont le chemin est le plus court parmi tous les chemin parcourues par les fourmis
 			spentTime = System.currentTimeMillis() - startTime;
 			

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 public class Ant {
 	
+	
 
 	public Instance m_instance;
 	public ArrayList<Integer> visitedCities;        // liste de toutes les villes visitées par la fourmi

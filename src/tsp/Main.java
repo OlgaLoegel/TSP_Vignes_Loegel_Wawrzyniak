@@ -74,7 +74,7 @@ public class Main {
 	public static void main(String[] args) {
 		String filename = null;
 		//long max_time = 60;
-		long max_time = 5;
+		long max_time = 60;
 		boolean verbose = false;
 		boolean graphical = false;
 		int typeInstance = 0;

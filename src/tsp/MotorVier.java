@@ -131,46 +131,46 @@ public class MotorVier {
 		while (spentTime < (m_timeLimit * 1000 - 100) && !sameWay) {
 			// pour chaque itération : (ie : on fait un cycle)
 			for (int b=0;b<n-1;b++) {  														// on s'arrête à b=n-1 car la fourmi doit déjà rentrer
-				System.out.println("\n >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>b=" + b);
+				//System.out.println("\n >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>b=" + b);
 				//pour chaque fourmi, on remet à jour ses données
 				for(Ant a : AntSystem) {
-					System.out.println("\n fourmi : " +a);
-					System.out.println("a.citiesStillToVisit : "+a.citiesStillToVisit);
-					System.out.println("currentPosition :"+ a.getCurrentPosition());
+					//System.out.println("\n fourmi : " +a);
+					//System.out.println("a.citiesStillToVisit : "+a.citiesStillToVisit);
+					//System.out.println("currentPosition :"+ a.getCurrentPosition());
 					
 					int c = this.chooseNextCity(a,a.currentPosition,a.citiesStillToVisit,pher);
-					System.out.println("next city : " +c);
+					//System.out.println("next city : " +c);
 
 					a.citiesStillToVisit.remove(a.citiesStillToVisit.indexOf(c));
-					System.out.println("toVisit :" + a.citiesStillToVisit);
+					//System.out.println("toVisit :" + a.citiesStillToVisit);
 					
 					a.visitedCities.add(c);
 					a.VisitedLength=a.VisitedLength+distances[a.getCurrentPosition()][c];
 					a.WentThisPath[a.getCurrentPosition()][c]=1;
 					a.setCurrentPosition(c);
-					System.out.println("liste des villes visitées : " + a.getVisitedCities());
-					System.out.println("mise à jour de wentThisPath\n"+this.versString(a.WentThisPath));
+					//System.out.println("liste des villes visitées : " + a.getVisitedCities());
+					//System.out.println("mise à jour de wentThisPath\n"+this.versString(a.WentThisPath));
 				}
 
 
 			}
 
-			System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>fin de cycle");
+			//System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>fin de cycle");
 			
 			for (Ant a: AntSystem) {										//on n'oublie pas de revenir à la case départ pour toutes les fourmis
 				a.visitedCities.add(a.visitedCities.get(0));
 				a.WentThisPath[a.getCurrentPosition()][a.visitedCities.get(0)]=1;
 				a.VisitedLength=a.VisitedLength+distances[a.getCurrentPosition()][0];
-				System.out.println(""+a);
-				System.out.println("tableau final :\n"+this.versString(a.WentThisPath));
-				System.out.println("longueur parcouru : "+a.getVisitedLength());
+				//System.out.println(""+a);
+				//System.out.println("tableau final :\n"+this.versString(a.WentThisPath));
+				//System.out.println("longueur parcouru : "+a.getVisitedLength());
 				
 			}
 
 			//sameWay=compareWaysCombination();										//retourne true si toutes les fourmis font le même chemin
 
 			pher=setPheromones(AntSystem, pher, evaporation, Q);					//remet à jour les pheromones sur tous les arcs
-			System.out.println("\n le tableau mis à jour des phéromones est :\n"+this.versString(pher));
+			//System.out.println("\n le tableau mis à jour des phéromones est :\n"+this.versString(pher));
 
 
 			theFourmi = this.compareTo(AntSystem, theFourmi);
@@ -178,7 +178,7 @@ public class MotorVier {
 			System.out.println("longueur minimale : "+shortest);
 			
 			shortestWay=theFourmi.visitedCities;	//retourne la liste des villes dont le chemin est le plus court parmi tous les chemin parcourues par les fourmis
-			System.out.println("chemin parcouru dont distance est la plus courte : "+shortestWay);
+			//System.out.println("chemin parcouru dont distance est la plus courte : "+shortestWay);
 			
 			spentTime = System.currentTimeMillis() - startTime;
 			
