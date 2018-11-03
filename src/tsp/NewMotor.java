@@ -113,6 +113,11 @@ public class NewMotor {
  	 *  les pheromones sur tous les arc sont remis à jour 
  	 *  
  	 *  On compare les distances parcourues par les fourmis lors du cycle et on prend la plus courte si elle est meilleure qu'avant
+ 	 *  On remplace par la nouvelle longueur plus courte longueur trouvée au cours du cycle précédent si elle est plus courte qu'avant
+ 	 *  On retourne la liste des villes dont le chemin est le plus court parmi tous les chemins parcourus par les fourmis
+ 	 *  On créée ensuite un tableau cities où chaque élément correspond au chemin le plus court 
+ 	 *  On affecte ce tableau à la solution
+ 	 *  	On affecte la plus courte longueur à la solution de la fonction objectif 	 
 	 */
 	public void motor() {
 		boolean sameWay = false;
@@ -224,22 +229,19 @@ public class NewMotor {
 				}
 			}
 
-			shortest = theFourmiLongueur; // remplace par la nouvelle plus courte longueur trouvée au cours du cyle
-											// précédent si plus courte qu'avant
+			shortest = theFourmiLongueur; 
 			System.out.println("" + shortest);
-			shortestWay = theFourmiChemin; // retourne la liste des villes dont le chemin est le plus court parmi tous
-											// leschemin parcourues par les fourmis
+			shortestWay = theFourmiChemin; 
 			spentTime = System.currentTimeMillis() - startTime;
 
 		}
-		int[] cities = new int[n + 1]; // transformation en tableau
+		int[] cities = new int[n + 1]; 
 		for (int s = 0; s < n + 1; s++) {
 			cities[s] = shortestWay.get(s);
 		}
-		m_solution.setM_cities(cities); // affectation du tableau à la solution
+		m_solution.setM_cities(cities); 
 
-		m_solution.setObjectiveValue(shortest); // affectation de la plus courte longueur à la solution de la fonction
-												// objectif
+		m_solution.setObjectiveValue(shortest); 
 
 	}
 
@@ -260,13 +262,12 @@ public class NewMotor {
 	}
 
 	/**
-	 * Si la fourmis a parcouru i->j ou j->i, retourne la quantité de pheromones
-	 * déposés sur l'arc i-j, sinon retourne 0
+	 * Si la fourmi a parcouru i->j ou j->i, retourne la quantité de pheromones
+	 * déposés sur l'arc i->j, sinon retourne 0
 	 * 
 	 * @param int ville où se trouve actuellement la fourmi
-	 * 
 	 * @param int ville où se rend la fourmi
-	 * @param Ant[] tableau de fourmis
+	 * @param Ant2[] tableau de fourmis
 	 * @param int constante liée à la quantité de phéromones déposée
 	 * 
 	 */
@@ -284,12 +285,12 @@ public class NewMotor {
 	}
 
 	/**
-	 * Met a jour la quantite de pheronomes present sur tous les arcs
+	 * Met à jour la quantite de pheronomes présente sur tous les arcs en prenant en compte le phénomène d'évaporation
 	 * 
 	 * @param Ant2 [] tableau de fourmis
 	 * @param double [][] tableau indiquant les quantités de phéromones
 	 * @param double constante liée à la quantité de phéromones évaporée
-	 * @param intconstante liée à la quantité de phéromones déposée
+	 * @param int constante liée à la quantité de phéromones déposée
 	 * 
 	 */
 	public void setPheromones(Ant2[] AntSystem, double[][] pheromones, double evaporation, int Q) {
@@ -301,8 +302,14 @@ public class NewMotor {
 		}
 	}
 
-	// plus une ville est loin, moins elle a de chance d’être choisie =« visibilité
-	// »
+	
+	/** 	 		  		 		 	   	 	
+	 * définition du concept de visibilité  : plus une ville est loin, moins elle a de chance d’être choisie 
+	 * 	  		 		 	   	 	
+	 * @param int ville actuelle où se trouve la fourmi 		 		 	   	 	
+	 * @param int ville où se rend la fourmi  		 		 	   	 	
+	 *  	 		  		 		 	   	 	
+	 */ 	 		  		 		 	   	 	
 
 	public float visibilite(int i, int j) {
 		float v = 0;
@@ -319,6 +326,13 @@ public class NewMotor {
 		return v;
 	}
 
+	/** 	 		  		 		 	   	 	
+	 * Retourne la prochaine ville à visiter 
+	 * 	  		 		 	   	 	
+	 * @param Ant2 une fourmi k		 		 	   	 	
+	 *  	 		  		 		 	   	 	
+	 */
+	
 	public int chooseNextCity(Ant2 k) {
 		double c = Math.random();
 		int i = 0;
@@ -330,10 +344,21 @@ public class NewMotor {
 		return k.citiesStillToVisit.get(i);
 	}
 
+	
+	/** 	 		  		 		 	   	 	
+	 * Retourne la solution		  		 		 	   	 	
+	 */
 	public Solution getM_solution() {
 		return m_solution;
 	}
 
+	
+
+	/** 	 		  		 		 	   	 	
+	 * Transforme le tableau de phéromones en un String de phéromones
+	 * 
+	 * @param double [][] tableau de phéromones	  		 		 	   	 	
+	 */
 	public String versString(double[][] pher) {
 		String s = "[";
 
