@@ -6,17 +6,25 @@ import java.util.ArrayList;
 public class Ant2 {
 
 public Instance m_instance;
-public ArrayList<Integer> visitedCities; // liste de toutes les villes visitées par la fourmi
 
- public ArrayList<Integer> citiesStillToVisit; // liste de toutes les villes encore à visiter
+public ArrayList<Integer> visitedCities; 				// liste de toutes les villes visitées par la fourmi
 
- public int currentPosition; // position actuelle de la fourmi //
+ public ArrayList<Integer> citiesStillToVisit; 			// liste de toutes les villes encore à visiter
 
- public long VisitedLength; // distance déjà parcourue par la fourmi //
+ public int currentPosition; 							// position actuelle de la fourmi 
 
- public int[][] WentThisPath; // tableau de 0 et de 1 indiquant 0 en [i][j] et [j][i] lorsque la fourmi a emprunté le chemin i->j (ou j->i), 0 sinon.
- public int VilleDepart;
- public ArrayList<Double> proba;
+ public long VisitedLength; 								// distance déjà parcourue par la fourmi 
+
+ public int[][] WentThisPath; 							// tableau de 0 et de 1 indiquant 0 en [i][j] et [j][i] lorsque la fourmi a emprunté le chemin i->j (ou j->i), 0 sinon.
+ 
+ public int VilleDepart;									// numéro de la ville de départ
+ 
+ public ArrayList<Double> proba;  						// liste des probabilités de choisir les villes suivantes
+ 
+ 
+ 
+ 
+ 
  /**
  * Contructeur de la classe fourmi
  * on ajoute à la liste solution les villes visitées
@@ -25,117 +33,115 @@ public ArrayList<Integer> visitedCities; // liste de toutes les villes visitées
  @ param m_instance donnée du problème associée à la solution
  
  */
- public Ant2(Instance m_instance) {
- this.m_instance=m_instance;
- this.visitedCities= new ArrayList<Integer>();
- this.citiesStillToVisit= new ArrayList<Integer>();
- this.currentPosition=0;
- this.WentThisPath= new int[m_instance.getNbCities()][m_instance.getNbCities()];
+	public Ant2(Instance m_instance) {
+		this.m_instance = m_instance;
+		this.visitedCities = new ArrayList<Integer>();
+		this.citiesStillToVisit = new ArrayList<Integer>();
+		this.currentPosition = 0;
+		this.WentThisPath = new int[m_instance.getNbCities()][m_instance.getNbCities()];
 
- for (int i =0; i<m_instance.getNbCities(); i++) {
- for (int j =0; j<m_instance.getNbCities(); j++) {
- this.WentThisPath[i][j]=0;
- }
+		for (int i = 0; i < m_instance.getNbCities(); i++) {
+			for (int j = 0; j < m_instance.getNbCities(); j++) {
+				this.WentThisPath[i][j] = 0;
+			}
 
- }
- this.VisitedLength=0;
- this.proba= new ArrayList<Double>();
- }
+		}
+		this.VisitedLength = 0;
+		this.proba = new ArrayList<Double>();
+	}
 
+	/**
+	 * retourne 1 si la fourmi a emprunté le chemin i->j (ou j->i), 0 sinon
+	 * 
+	 * @param int la ville où se trouve actuellement la fourmi
+	 * @param int la prochaine ville à visiter
+	 */
+	public int getWentThisPath(int i, int j) {
+		return this.WentThisPath[i][j];
+	}
 
- /**
- * retourne 1 si la fourmi a emprunté le chemin i->j (ou j->i), 0 sinon
+	public ArrayList<Double> setProba(ArrayList<Double> proba) {
 
- @param int la ville où se trouve actuellement la fourmi 
- @param int la prochaine ville à visiter
- */
- public int getWentThisPath(int i, int j) {
-return this.WentThisPath[i][j];
-}
- public ArrayList<Double> setProba(ArrayList<Double> proba) {
+		return this.proba = proba;
+	}
 
- return this.proba=proba;
- }
+	/**
+	 * on indique 1 si la fourmi a emprunté le chemin i->j (ou j->i), 0 sinon
+	 * 
+	 * @param int la ville où se trouve actuellement la fourmi
+	 * @param int la prochaine ville à visiter
+	 */
+	public void setWentThisPath(int i, int j) {
+		this.WentThisPath[i][j] = 1;
+	}
 
-/**
-* on indique 1 si la fourmi a emprunté le chemin i->j (ou j->i), 0 sinon
+	/**
+	 * Retourne la liste des villes visitées par la fourmi
+	 */
+	public ArrayList<Integer> getVisitedCities() {
+		return this.visitedCities;
+	}
 
-@param int la ville où se trouve actuellement la fourmi
+	/**
+	 * Retourne la liste des villes encore à visiter par la fourmi
+	 */
+	public ArrayList<Integer> getCitiesStillToVisit() {
+		return this.citiesStillToVisit;
+	}
 
- @param int la prochaine ville à visiter
-*/
-public void setWentThisPath(int i, int j) {
-this.WentThisPath[i][j]=1;
-}
+	/**
+	 * Remplace la liste des villes encore à visiter par la fourmi par la liste
+	 * indiquée en paramètre
+	 * 
+	 * @param ArrayList<Integer> liste des villes à visiter
+	 */
+	public void setCitiesStillToVisit(ArrayList<Integer> citiesToVisit) {
 
+		this.citiesStillToVisit = citiesToVisit;
+	}
 
-/**
-* Retourne la liste des villes visitées par la fourmi
-*/ 
-public ArrayList<Integer> getVisitedCities(){
- return this.visitedCities;
-}
+	/**
+	 * Retourne la distance déjà parcourue par la fourmi
+	 */
+	public long getVisitedLength() {
+		return VisitedLength;
+	}
 
-/**
-* Retourne la liste des villes encore à visiter par la fourmi
+	/**
+	 * Retourne la position actuelle de la fourmi
+	 */
+	public int getCurrentPosition() {
+		return this.currentPosition;
+	}
 
-*/
- public ArrayList<Integer> getCitiesStillToVisit(){
- return this.citiesStillToVisit;
- }
+	/**
+	 * Remplace la liste des villes visitées par la fourmi par la liste indiquée en
+	 * paramètre
+	 * 
+	 * @param ArrayList<Integer> liste des villes visitées
+	 */
+	public void setVisitedCities(ArrayList<Integer> visitedCities) {
+		this.visitedCities = visitedCities;
+	}
 
- /**
-* Remplace la liste des villes encore à visiter par la fourmi par la liste indiquée en paramètre
+	/**
+	 * Remplace la distance parcourue par la fourmi par la distance indiquée en
+	 * paramètre
+	 * 
+	 * @param long distance parcourue par la fourmi
+	 */
+	public void setVisitedLength(long VisitedLength) {
+		this.VisitedLength = VisitedLength;
+	}
 
-@param ArrayList<Integer> liste des villes à visiter
-*/
- public void setCitiesStillToVisit(ArrayList<Integer> citiesToVisit) {
-
- this.citiesStillToVisit= citiesToVisit;
- }
-
- /**
-* Retourne la distance déjà parcourue par la fourmi
-*/
- public long getVisitedLength() { 
-return VisitedLength;
-}
-
-
- /**
-* Retourne la position actuelle de la fourmi
-*/
- public int getCurrentPosition() {
- return this.currentPosition;
- }
-
-
- /**
-* Remplace la liste des villes visitées par la fourmi par la liste indiquée en paramètre
-
-@param ArrayList<Integer> liste des villes visitées
-*/
- public void setVisitedCities(ArrayList<Integer> visitedCities) {
- this.visitedCities = visitedCities;
-}
-
-
- /**
-* Remplace la distance parcourue par la fourmi par la distance indiquée en paramètre
- 
-@param long distance parcourue par la fourmi
-*/
-public void setVisitedLength(long VisitedLength) {
-this.VisitedLength = VisitedLength;
-}
-
-/**
-* Remplace la position actuelle de la fourmi par la position indiquée en paramètre
-
-@param int position actuelle de la fourmi
-*/
-public void setCurrentPosition(int currentPosition) {
- this.currentPosition = currentPosition;
-}
+	/**
+	 * Remplace la position actuelle de la fourmi par la position indiquée en
+	 * paramètre
+	 * 
+	 * @param int position actuelle de la fourmi
+	 */
+	public void setCurrentPosition(int currentPosition) {
+		this.currentPosition = currentPosition;
+	}
 
 } 
