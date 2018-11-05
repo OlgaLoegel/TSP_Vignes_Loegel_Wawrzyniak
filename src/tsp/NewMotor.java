@@ -129,12 +129,12 @@ public class NewMotor {
 		long shortest = 0;
 		float[][] vis = new float[n][n]; 
 		for (int i = 0; i < n; i++) { 
-			for (int j = 0; j < n; j++) {
-				vis[i][j] = visibilite(i, j);
+			for (int j = 0; j < n; j++) {									//création tableau des visibilités 
+				vis[i][j] = visibilite(i, j);								//initialisation tableau de visibilité
 			}
 		}
 
-		double[][] pher = new double[n][n]; 
+		double[][] pher = new double[n][n]; 									//tableau des phéromones initialisé
 		for (int k = 0; k < n; k++) { 
 			for (int j = 0; j < n; j++) {
 				pher[k][j] = p;
@@ -144,9 +144,12 @@ public class NewMotor {
 		ArrayList<Integer> theFourmiChemin = new ArrayList<Integer>();
 		long theFourmiLongueur = 0;
 
-		while (spentTime < (m_timeLimit * 1000 - 100) && !sameWay) {
+		while (spentTime < (m_timeLimit * 1000 - 100) && !sameWay) {			//début de la boucle qui opère tant qu'on n'a pas atteint le temps max
+																			//ou que les fourmis ne font pas toutes le même chemin
+			
+																			//initialisation
 
-			for (Ant2 a : AntSystem) {
+			for (Ant2 a : AntSystem) {                                       // pour chaque fourmi
 
 				a.VilleDepart = (int) (Math.random() * (n));
 				a.setVisitedLength(0); 
@@ -156,7 +159,7 @@ public class NewMotor {
 				a.setCitiesStillToVisit(new ArrayList<Integer>()); 
 
 				for (int l = 0; l < n; l++) { 
-					if (l != a.VilleDepart) { 
+					if (l != a.VilleDepart) { 								//on ne met pas dans la liste la ville d'origine qui sera choisie la dernière (ici, 0)
 						a.citiesStillToVisit.add(l);
 					}
 				}
@@ -168,8 +171,8 @@ public class NewMotor {
 				}
 
 			}
-
-			for (int b = 0; b < n - 1; b++) {
+																			//on s'arrête à b=n-1 car la ville de départ a déjà été visité
+			for (int b = 0; b < n - 1; b++) {								//pour chaque fourmi, on remet à jour ses données
 
 				for (Ant2 a : AntSystem) {
 
@@ -179,17 +182,16 @@ public class NewMotor {
 
 					for (int k = 0; k < a.citiesStillToVisit.size(); k++) {
 
-						s = s + (Math.pow(pher[a.currentPosition][a.citiesStillToVisit.get(k)], alpha)
+						s = s + (Math.pow(pher[a.currentPosition][a.citiesStillToVisit.get(k)], alpha)			//pour l'ensemble des villes encore à visiter, on ajoute à la somme s la probabilité de se rendre à ces villes
 								* Math.pow(visibilite(a.currentPosition, a.citiesStillToVisit.get(k)), beta));
 
 					}
 
-					for (int e = 0; e < a.citiesStillToVisit.size(); e++) {
-
-						a.proba.add(e,
-								(Math.pow(pher[a.currentPosition][a.citiesStillToVisit.get(e)], alpha)
+					for (int e = 0; e < a.citiesStillToVisit.size(); e++) {										
+																												//puis on met à jour la liste des probabilités en utilisant en partie la somme calculée précédemment (cf formule dans le rapport)
+						a.proba.add(e,(Math.pow(pher[a.currentPosition][a.citiesStillToVisit.get(e)], alpha)
 										* Math.pow(visibilite(a.currentPosition, a.citiesStillToVisit.get(e)), beta))
-								/ s);
+								/ s);																			
 					}
 
 					int c = this.chooseNextCity(a);
@@ -209,7 +211,7 @@ public class NewMotor {
 				}
 			}
 
-			for (Ant2 a : AntSystem) {
+			for (Ant2 a : AntSystem) {								//on n'oublie pas de revenir à la case départ pour toutes les fourmis
 
 				a.visitedCities.add(a.VilleDepart);
 
@@ -224,25 +226,26 @@ public class NewMotor {
 			}
 			
 			
-			sameWay = compareWaysCombination(); 
-			this.setPheromones(AntSystem, pher, evaporation, Q); 
+			sameWay = compareWaysCombination(); 						//retourne true si toutes les fourmis font le même chemin
+			this.setPheromones(AntSystem, pher, evaporation, Q);     //remet à jour les pheromones sur tous les arcs
 
 
 			for (Ant2 a : AntSystem) {
 				if (a.getVisitedLength() < theFourmiLongueur || theFourmiLongueur == 0) {
-					theFourmiLongueur = a.getVisitedLength();
+					theFourmiLongueur = a.getVisitedLength();		//remplace par la nouvelle plus courte longueur trouvée au cours
+																	//du cyle précédent si plus courte qu'avant
 					theFourmiChemin = a.getVisitedCities();
 				}
 			}
 
-			shortest = theFourmiLongueur; 
+			shortest = theFourmiLongueur; 							
 			System.out.println("" + shortest);
-			shortestWay = theFourmiChemin; 
+			shortestWay = theFourmiChemin; 			
 			spentTime = System.currentTimeMillis() - startTime;
 
 		}
 		
-		//met la ville 0 en première et transforme en tableau
+																	//met la ville 0 en première 
 		
 		int c=-1;
 		for(int i =0;i<shortestWay.size();i++) {
@@ -268,9 +271,9 @@ public class NewMotor {
 			
 			cities[s] = shortestWayBis.get(s);
 		}
-		m_solution.setM_cities(cities); 
+		m_solution.setM_cities(cities); 								//affectation du tableau à la solution
 
-		m_solution.setObjectiveValue(shortest); 
+		m_solution.setObjectiveValue(shortest); 						//affectation de la plus courte longueur
 
 	}
 
@@ -304,7 +307,7 @@ public class NewMotor {
 
 		long s = 0;
 		for (Ant2 ant : AntSystem) {
-			if (ant.WentThisPath[i][j] == 1) { // A REVOIR
+			if (ant.WentThisPath[i][j] == 1) { 
 
 				s = s + Q / ant.getVisitedLength();
 
