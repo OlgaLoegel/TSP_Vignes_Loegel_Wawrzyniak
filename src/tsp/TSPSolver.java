@@ -36,27 +36,27 @@ public class TSPSolver  {
 	private long m_timeLimit;
 	
 	
-	private int n; 								//nombre de villes
+	private int n; 									//nombre de villes
 	
-	private int m=10; 							//nombre de fourmis
+	private int m=100; 								//nombre de fourmis
 	
 	private long[][] distances; 					//distances entre villes à récupérer dans données
 	
-	private double alpha=4;						//paramètre pour attribuer plus ou moins d'importance aux phéromones
+	private double alpha=4;							//paramètre pour attribuer plus ou moins d'importance aux phéromones
 	
-	private double beta=3; 						//paramètre pour attribuer plus ou moins d'importance à la visibilité
+	private double beta=3; 							//paramètre pour attribuer plus ou moins d'importance à la visibilité
 	
-	private double p=10000; 						//quantité initiale de phéromones qu'on dépose sur tous les arcs
+	private double p=100; 						//quantité initiale de phéromones qu'on dépose sur tous les arcs
+		
+	private Ant2[] AntSystem; 						//tableau de fourmis
+		
+	private int Q=100000;							// constante liée à la quantité de phéromones déposée
 	
-	private Ant2[] AntSystem; 					//tableau de fourmis
+	private double evaporation=0.5;					// constante liée à la quantité de phéromones évaporée
 	
-	private int Q=100000;						// constante liée à la quantité de phéromones déposée
+	long startTime = System.currentTimeMillis(); 	// début du chronomètre
 	
-	private double evaporation=0.5;				// constante liée à la quantité de phéromones évaporée
-	
-	long startTime = System.currentTimeMillis(); // début du chronomètre
-	
-	long spentTime = 0;							// temps écoulé depuis le début du chronomètre
+	long spentTime = 0;								// temps écoulé depuis le début du chronomètre
 
 	
 	// -----------------------------

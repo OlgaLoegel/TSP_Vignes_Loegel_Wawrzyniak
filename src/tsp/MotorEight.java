@@ -116,9 +116,10 @@ public class MotorEight {
 				}
 		  				//attribue le tableau initialisé à l'attribue wentThisPath de chaque fourmi a
            
-				theFourmi.setCurrentPosition(AntSystem[0].getCurrentPosition());
+
 				theFourmi.setVisitedCities(AntSystem[0].getVisitedCities());
 				theFourmi.setVisitedLength(AntSystem[0].getVisitedLength());
+			
 				
 				
 			

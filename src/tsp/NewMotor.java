@@ -7,32 +7,32 @@ public class NewMotor {
 
 
 	private int n; 										//nombre de villes
-	
+
 	private int m;										//nombre de fourmis
-	
+
 	private long[][] distances;  						//tableau des distances entre villes à récupérer dans données
-	
+
 	private double alpha;								//paramètre pour attribuer plus ou moins d'importance aux phéromones
-	
+
 	private double beta;									//paramètre pour attribuer plus ou moins d'importance à la visibilité
-	
+
 	private double p;									//quantité initiale de phéromones que l'on dépose sur tous les arcs
-	
+
 	private Ant2[] AntSystem; 							//tableau des fourmis
-	
+
 	private int Q; 										// constante liée à la quantité de phéromones déposée
-	
+
 	private double evaporation; 							// constante liée à la quantité de phéromones évaporée
-	
+
 	long startTime = System.currentTimeMillis(); 		// début du chronomètre
-	
+
 	long spentTime = 0; 									// temps écoulé depuis le début du chronomètre
 
-	
-	
-	
-	
-	
+
+
+
+
+
 	/**
 	 * The Solution that will be returned by the program.
 
@@ -54,12 +54,16 @@ public class NewMotor {
 	 @param long temps imposé pour résoudre le problème
 	 @param m_instance donnée du problème associée à la solution
 	 */
-	
+
 	public NewMotor(int m, double alpha, double beta, double p, int Q, double evaporation, Instance instance,
 			long timeLimit) {
 		this.m_instance = instance;
 		this.n = instance.getNbCities();
-		this.m = m;
+		if (instance.getNbCities()>400) {
+			this.m=100;
+		} else {
+			this.m = instance.getNbCities();
+		}
 		this.distances = instance.getDistances();
 		this.alpha = alpha;
 		this.beta = beta;
@@ -93,31 +97,31 @@ public class NewMotor {
 	 *  
 	 *  COEUR DU PROGRAMME actualisant la solution :
 	 *  début de la boucle qui opère tant qu'on n'a pas atteint le temps imposé ou que les fourmis ne font pas toutes le même chemin
- 	 *  pour chaque itération : (ie : on fait un cycle)
- 	 *  on s'arrête à b=n-1 car la fourmi doit déjà rentrer
- 	 *  pour chaque fourmi, on remet à jour ses données :
- 	 *  la liste des probabilités est remise à 0
- 	 *  pour l'ensemble des villes encore à visiter, on ajoute à la somme s la probabilité de se rendre à ces villes
- 	 *  puis on met à jour la liste des probabilités en utilisant en partie la somme calculée précédemment (cf formule dans le rapport)
- 	 *  c représente la ville suivante que l'on met donc à jour : on l'enlève des villes à visiter et on la rajoute dans les villes déjà visitées
- 	 *  on ajoute à la distance totale parcourue la distance entre la ville précédente et la ville à laquelle la fourmi se rend
- 	 *  on actualise l'élément du tableau WentThisPath correspondant au trajet ville précédente / ville actuelle effectuée à 1 et au trajet ville actuelle / ville précédente effectué à 1 par symétrie
- 	 *  la position actuelle est elle aussi mise à jour
- 	 *  
- 	 *  Pour chaque fourmi :
- 	 *  on n'oublie pas de revenir à la case départ 
- 	 *  on actualise l'élément du tableau WentThisPath correspondant au trajet ville actuelle / ville de départ effectuée à 1 et ville de départ / ville actuelle effectué à 1 par symétrie
- 	 *  on ajoute à la distance totale parcourue la distance entre la ville actuelle et la ville 0 pour bien boucler le chemin de la fourmi
- 	 *  la liste des villes à visiter est vidée (création d'une nouvelle liste)
- 	 *  le booléen sameWay retourne true si toutes les fourmis font le même chemin
- 	 *  les pheromones sur tous les arc sont remis à jour 
- 	 *  
- 	 *  On compare les distances parcourues par les fourmis lors du cycle et on prend la plus courte si elle est meilleure qu'avant
- 	 *  On remplace par la nouvelle longueur plus courte longueur trouvée au cours du cycle précédent si elle est plus courte qu'avant
- 	 *  On retourne la liste des villes dont le chemin est le plus court parmi tous les chemins parcourus par les fourmis
- 	 *  On créée ensuite un tableau cities où chaque élément correspond au chemin le plus court 
- 	 *  On affecte ce tableau à la solution
- 	 *  	On affecte la plus courte longueur à la solution de la fonction objectif 	 
+	 *  pour chaque itération : (ie : on fait un cycle)
+	 *  on s'arrête à b=n-1 car la fourmi doit déjà rentrer puisqu'elle a visité les n villes sauf celle de la ville de départ
+	 *  pour chaque fourmi, on remet à jour ses données :
+	 *  la liste des probabilités est remise à 0
+	 *  pour l'ensemble des villes encore à visiter, on ajoute à la somme s la probabilité de se rendre à ces villes
+	 *  puis on met à jour la liste des probabilités en utilisant en partie la somme calculée précédemment (cf formule dans le rapport)
+	 *  c représente la ville suivante que l'on met donc à jour : on l'enlève des villes à visiter et on la rajoute dans les villes déjà visitées
+	 *  on ajoute à la distance totale parcourue la distance entre la ville précédente et la ville à laquelle la fourmi se rend
+	 *  on actualise l'élément du tableau WentThisPath correspondant au trajet ville précédente / ville actuelle effectuée à 1 et au trajet ville actuelle / ville précédente effectué à 1 par symétrie
+	 *  la position actuelle est elle aussi mise à jour
+	 *  
+	 *  Pour chaque fourmi :
+	 *  on n'oublie pas de revenir à la case départ 
+	 *  on actualise l'élément du tableau WentThisPath correspondant au trajet ville actuelle / ville de départ effectuée à 1 et ville de départ / ville actuelle effectué à 1 par symétrie
+	 *  on ajoute à la distance totale parcourue la distance entre la ville actuelle et la ville 0 pour bien boucler le chemin de la fourmi
+	 *  la liste des villes à visiter est vidée (création d'une nouvelle liste)
+	 *  le booléen sameWay retourne true si toutes les fourmis font le même chemin
+	 *  les pheromones sur tous les arc sont remis à jour 
+	 *  
+	 *  On compare les distances parcourues par les fourmis lors du cycle et on prend la plus courte si elle est meilleure qu'avant
+	 *  On remplace par la nouvelle longueur plus courte longueur trouvée au cours du cycle précédent si elle est plus courte qu'avant
+	 *  On retourne la liste des villes dont le chemin est le plus court parmi tous les chemins parcourus par les fourmis
+	 *  On créée ensuite un tableau cities où chaque élément correspond au chemin le plus court 
+	 *  On affecte ce tableau à la solution
+	 *  	On affecte la plus courte longueur à la solution de la fonction objectif 	 
 	 */
 	public void motor() {
 		boolean sameWay = false;
@@ -143,20 +147,20 @@ public class NewMotor {
 		while (spentTime < (m_timeLimit * 1000 - 100) && !sameWay) {
 
 			for (Ant2 a : AntSystem) {
-				
+
 				a.VilleDepart = (int) (Math.random() * (n));
 				a.setVisitedLength(0); 
 				a.setCurrentPosition(a.VilleDepart); 
 				a.setVisitedCities(new ArrayList<Integer>());
 				a.visitedCities.add(a.VilleDepart);
 				a.setCitiesStillToVisit(new ArrayList<Integer>()); 
-				
+
 				for (int l = 0; l < n; l++) { 
 					if (l != a.VilleDepart) { 
 						a.citiesStillToVisit.add(l);
 					}
 				}
-				
+
 				for (int h = 0; h < n; h++) {
 					for (int j = 0; j < n; j++) {
 						a.WentThisPath[h][j] = 0; 
@@ -165,9 +169,9 @@ public class NewMotor {
 
 			}
 
-				for (int b = 0; b < n - 1; b++) {
-					
-					for (Ant2 a : AntSystem) {
+			for (int b = 0; b < n - 1; b++) {
+
+				for (Ant2 a : AntSystem) {
 
 					a.proba.clear();
 
@@ -185,7 +189,7 @@ public class NewMotor {
 						a.proba.add(e,
 								(Math.pow(pher[a.currentPosition][a.citiesStillToVisit.get(e)], alpha)
 										* Math.pow(visibilite(a.currentPosition, a.citiesStillToVisit.get(e)), beta))
-										/ s);
+								/ s);
 					}
 
 					int c = this.chooseNextCity(a);
@@ -206,22 +210,24 @@ public class NewMotor {
 			}
 
 			for (Ant2 a : AntSystem) {
-				
+
 				a.visitedCities.add(a.VilleDepart);
 
 				a.WentThisPath[a.getCurrentPosition()][a.VilleDepart] = 1;
-				
+
 				a.WentThisPath[a.VilleDepart][a.getCurrentPosition()] = 1;
-				
-				a.VisitedLength = a.VisitedLength + distances[a.getCurrentPosition()][0];
+
+				a.VisitedLength = a.VisitedLength + distances[a.getCurrentPosition()][a.VilleDepart];
 
 				a.citiesStillToVisit = new ArrayList<Integer>();
 
 			}
+			
+			
 			sameWay = compareWaysCombination(); 
 			this.setPheromones(AntSystem, pher, evaporation, Q); 
 
-			
+
 			for (Ant2 a : AntSystem) {
 				if (a.getVisitedLength() < theFourmiLongueur || theFourmiLongueur == 0) {
 					theFourmiLongueur = a.getVisitedLength();
@@ -235,9 +241,32 @@ public class NewMotor {
 			spentTime = System.currentTimeMillis() - startTime;
 
 		}
+		
+		//met la ville 0 en première et transforme en tableau
+		
+		int c=-1;
+		for(int i =0;i<shortestWay.size();i++) {
+			if (shortestWay.get(i)==0) {
+				c=i;
+			}
+		}
+		
+		ArrayList<Integer> shortestWayBis = new ArrayList<Integer>();
+		
+		for (int j=c;j<shortestWay.size()-1;j++) {
+			shortestWayBis.add(shortestWay.get(j));
+		}
+		
+		for (int v=0;v<c;v++) {
+			shortestWayBis.add(shortestWay.get(v));
+		}
+		
+		shortestWayBis.add(0);
+		
 		int[] cities = new int[n + 1]; 
 		for (int s = 0; s < n + 1; s++) {
-			cities[s] = shortestWay.get(s);
+			
+			cities[s] = shortestWayBis.get(s);
 		}
 		m_solution.setM_cities(cities); 
 
@@ -302,7 +331,7 @@ public class NewMotor {
 		}
 	}
 
-	
+
 	/** 	 		  		 		 	   	 	
 	 * définition du concept de visibilité  : plus une ville est loin, moins elle a de chance d’être choisie 
 	 * 	  		 		 	   	 	
@@ -321,8 +350,8 @@ public class NewMotor {
 			// }
 
 		} // (Exception e) {
-			// e.printStackTrace();
-			// }
+		// e.printStackTrace();
+		// }
 		return v;
 	}
 
@@ -332,7 +361,7 @@ public class NewMotor {
 	 * @param Ant2 une fourmi k		 		 	   	 	
 	 *  	 		  		 		 	   	 	
 	 */
-	
+
 	public int chooseNextCity(Ant2 k) {
 		double c = Math.random();
 		int i = 0;
@@ -344,7 +373,7 @@ public class NewMotor {
 		return k.citiesStillToVisit.get(i);
 	}
 
-	
+
 	/** 	 		  		 		 	   	 	
 	 * Retourne la solution		  		 		 	   	 	
 	 */
@@ -352,7 +381,7 @@ public class NewMotor {
 		return m_solution;
 	}
 
-	
+
 
 	/** 	 		  		 		 	   	 	
 	 * Transforme le tableau de phéromones en un String de phéromones

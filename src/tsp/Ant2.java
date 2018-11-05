@@ -31,7 +31,7 @@ public ArrayList<Integer> visitedCities; 				// liste de toutes les villes visit
  * l'origine est attribuée à la ville d'origine de la fourmi
  * la longueur du trajet effectué est initialisé à 0
  @ param m_instance donnée du problème associée à la solution
- 
+  
  */
 	public Ant2(Instance m_instance) {
 		this.m_instance = m_instance;
